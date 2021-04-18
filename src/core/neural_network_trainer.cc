@@ -24,10 +24,12 @@ float NeuralNetworkTrainer::CalculatePointError(
   return 0;
 }
 
-float NeuralNetworkTrainer::SigmoidActivator(float value) const { return 0; }
+float NeuralNetworkTrainer::SigmoidActivator(float value) const {
+  return 1 / (1 + std::exp(-value));
+}
 
 float NeuralNetworkTrainer::SigmoidActivatorDerivative(float value) const {
-  return 0;
+  return SigmoidActivator(value) * (1 - SigmoidActivator(value));
 }
 
 } // namespace neural_network
