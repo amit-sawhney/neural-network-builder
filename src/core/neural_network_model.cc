@@ -19,7 +19,12 @@ NeuralNetworkModel::NeuralNetworkModel(std::vector<size_t> neuron_layers,
   InitializeModelWeights();
 }
 
-void NeuralNetworkModel::Clear() {}
+void NeuralNetworkModel::Clear() {
+  neuron_layers_.clear();
+  model_weights_.clear();
+  num_neurons_ = 0;
+  trainer_ = NeuralNetworkTrainer();
+}
 
 void NeuralNetworkModel::Train(size_t epochs, const Matrix &input,
                                const Matrix &output) {}
