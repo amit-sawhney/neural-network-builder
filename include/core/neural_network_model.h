@@ -19,8 +19,7 @@ public:
    *
    * @param neuron_layers the specified number of layers and neurons per layer
    */
-  NeuralNetworkModel(const std::vector<size_t> &neuron_layers,
-                     float learning_rate = 0.01);
+  NeuralNetworkModel(std::vector<size_t> neuron_layers, float learning_rate);
 
   friend std::ostream &operator<<(std::ostream &output,
                                   const NeuralNetworkModel &model);
@@ -34,13 +33,17 @@ public:
    * Clears the Neural Network of it's current values
    */
   void Clear();
+  
+  Matrix GetModelWeights() const;
 
 private:
-
   void InitializeModelWeights();
+  
+  float GenerateRandWeight() const;
 
   Matrix model_weights_;
-  std::vector<float> neuron_layers_;
+  std::vector<size_t> neuron_layers_;
+  size_t num_neurons_;
   float learning_rate_;
   NeuralNetworkTrainer trainer_;
 };

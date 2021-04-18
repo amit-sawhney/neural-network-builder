@@ -55,7 +55,7 @@ list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES} src/visualizer/neural_network_buil
 
 list(APPEND TEST_FILES tests/core/test_neural_network_model.cc)
 
-add_executable(train-neural-network apps/train_neural_network.cpp ${CORE_SOURCE_FILES})
+add_executable(train-neural-network apps/train_neural_network_main.cc ${CORE_SOURCE_FILES})
 target_include_directories(train-neural-network PRIVATE include)
 
 ci_make_app(
