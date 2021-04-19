@@ -1,5 +1,4 @@
 #include <iostream>
-#include <numeric>
 
 #include "core/model.h"
 

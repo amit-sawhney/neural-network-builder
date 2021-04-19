@@ -35,4 +35,20 @@ float ModelMath::CalculateDotProduct(const std::vector<float> &vector1,
 
   return total_sum;
 }
+
+std::vector<float>
+ModelMath::CalculateErrorLayer(const std::vector<float> &actual_values,
+                               const std::vector<float> &expected_values) {
+
+  std::vector<float> errors;
+  for (size_t value_idx = 0; value_idx < expected_values.size(); ++value_idx) {
+    float expected = expected_values[value_idx];
+    float actual = actual_values[value_idx];
+
+    float error = CalculatePointError(expected, actual);
+    errors.emplace_back(error);
+  }
+
+  return errors;
+}
 } // namespace neural_network

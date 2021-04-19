@@ -38,17 +38,6 @@ public:
   Matrix ForwardPropagate(const Layer &layer);
 
   /**
-   * Calculates the error associated with a layer
-   *
-   * @param actual_values the actual values that the network generated
-   * @param expected_values the expected values that the network should have
-   * generated
-   * @return the output errors associated with the network layer
-   */
-  Layer CalculateErrorLayer(const Layer &actual_values,
-                            const Layer &expected_values) const;
-
-  /**
    * Executes the back propagation across a neural network
    *
    * @param output_errors the point error to calculate neuron value shifting

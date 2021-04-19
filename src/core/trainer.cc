@@ -47,8 +47,8 @@ void Trainer::BackPropagate(Matrix *output_errors,
     Layer hidden_layer_errors = CalculateHiddenLayerErrors(
         neuron_values, errors, next_layer_weights, layer);
 
-    output_errors->push_back(hidden_layer_errors);
-    weight_changes.push_back(hidden_layer_delta_weights);
+    output_errors->emplace_back(hidden_layer_errors);
+    weight_changes.emplace_back(hidden_layer_delta_weights);
   }
 
   UpdateWeights(weight_changes);
@@ -70,7 +70,7 @@ Layer Trainer::CalculateHiddenLayerErrors(const Matrix &neuron_values,
     float neuron_value = neuron_values[layer_size][layer_idx];
     product *= ModelMath::CalculateSigmoidDerivative(neuron_value);
 
-    layer_errors.push_back(product);
+    layer_errors.emplace_back(product);
   }
 
   return layer_errors;
@@ -111,23 +111,9 @@ Layer Trainer::CalculateHiddenLayerWeights(const Layer &errors,
   return delta_weights;
 }
 
-Layer Trainer::CalculateErrorLayer(const Layer &actual_values,
-                                   const Layer &expected_values) const {
-
-  Layer errors;
-  for (size_t value_idx = 0; value_idx < expected_values.size(); ++value_idx) {
-    float expected = expected_values[value_idx];
-    float actual = actual_values[value_idx];
-
-    float error = ModelMath::CalculatePointError(expected, actual);
-    errors.push_back(error);
-  }
-
-  return errors;
-}
-
-Matrix Trainer::CalculateNextBackPropagationLayerWeights(const Layer &layer_weights,
-                                              size_t weight_idx) const {
+Matrix
+Trainer::CalculateNextBackPropagationLayerWeights(const Layer &layer_weights,
+                                                  size_t weight_idx) const {
   Matrix next_layer_weights;
 
   for (size_t neuron = 0; neuron < layer_sizes_[weight_idx]; ++neuron) {
@@ -151,8 +137,9 @@ Matrix Trainer::CalculateNextBackPropagationLayerWeights(const Layer &layer_weig
   return next_layer_weights;
 }
 
-Matrix Trainer::CalculateNextForwardPropagationLayerWeights(const Layer &layer_weights,
-                                          size_t weight_idx) const {
+Matrix
+Trainer::CalculateNextForwardPropagationLayerWeights(const Layer &layer_weights,
+                                                     size_t weight_idx) const {
 
   Matrix next_layer_weights;
 

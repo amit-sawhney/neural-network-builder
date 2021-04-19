@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/trainer.h>
 #include <vector>
 
 namespace neural_network {
@@ -47,5 +46,17 @@ public:
    */
   static float CalculateDotProduct(const std::vector<float> &vector1,
                                    const std::vector<float> &vector2);
+
+  /**
+   * Calculates the error associated with a layer
+   *
+   * @param actual_values the actual values that the network generated
+   * @param expected_values the expected values that the network should have
+   * generated
+   * @return the output errors associated with the network layer
+   */
+  static std::vector<float>
+  CalculateErrorLayer(const std::vector<float> &actual_values,
+                      const std::vector<float> &expected_values);
 };
 } // namespace neural_network
