@@ -39,6 +39,10 @@ private:
                               const Matrix &current_neuron_values,
                               size_t current_layer) const;
 
+  std::vector<float> CalculateHiddenLayerErrors(
+      const Matrix &neuron_values, const std::vector<float> &errors,
+      const Matrix &next_layer_weights, size_t current_layer) const;
+
   void UpdateWeights(const Matrix &delta_weights);
 
   Matrix weights_;
