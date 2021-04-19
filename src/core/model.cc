@@ -37,7 +37,7 @@ void Model::Train(size_t epochs, const Matrix &training_values,
   for (size_t epoch = 0; epoch < epochs; ++epoch) {
 
     for (size_t layer = 0; layer < training_values.size(); ++layer) {
-      std::vector<float> layer_values = training_values[layer];
+      Layer layer_values = training_values[layer];
 
       Matrix neuron_values = trainer_.ForwardPropagate(layer_values);
       Matrix output_errors = {trainer_.CalculateErrorLayer(
@@ -52,7 +52,7 @@ Matrix Model::InitializeModelWeights(const std::vector<size_t> &layers) {
   Matrix weights;
 
   for (size_t layer = 0; layer < layers.size() - 1; ++layer) {
-    std::vector<float> layer_weights;
+    Layer layer_weights;
 
     size_t weights_size = layers[layer] * layers[layer + 1];
 

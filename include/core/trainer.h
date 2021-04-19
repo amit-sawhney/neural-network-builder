@@ -6,7 +6,8 @@
 
 namespace neural_network {
 
-typedef std::vector<std::vector<float>> Matrix;
+typedef std::vector<float> Layer;
+typedef std::vector<Layer> Matrix;
 
 class Trainer {
 
@@ -15,32 +16,29 @@ public:
 
   Trainer(Matrix weights, std::vector<size_t> layer_sizes, float learning_rate);
 
-  Matrix ForwardPropagate(const std::vector<float> &layer);
+  Matrix ForwardPropagate(const Layer &layer);
 
-  std::vector<float>
-  CalculateErrorLayer(const std::vector<float> &actual_values,
-                      const std::vector<float> &expected_values) const;
+  Layer CalculateErrorLayer(const Layer &actual_values,
+                            const Layer &expected_values) const;
 
   void BackPropagate(Matrix *output_errors, const Matrix &neuron_values);
 
 private:
-  Matrix
-  CalculateNextLayerWeights(const std::vector<float> &current_layer_weights,
-                            size_t current_weight_idx) const;
+  Matrix CalculateNextLayerWeights(const Layer &current_layer_weights,
+                                   size_t current_weight_idx) const;
 
-  std::vector<float> CalculateNextNeurons(const Matrix &neurons,
-                                          const Matrix &weights,
-                                          size_t current_weight_idx) const;
+  Layer CalculateNextNeurons(const Matrix &neurons, const Matrix &weights,
+                             size_t current_weight_idx) const;
 
-  std::vector<float>
-  CalculateHiddenLayerWeights(const std::vector<float> &errors,
-                              const std::vector<float> &current_weights,
-                              const Matrix &current_neuron_values,
-                              size_t current_layer) const;
+  Layer CalculateHiddenLayerWeights(const Layer &errors,
+                                    const Layer &current_weights,
+                                    const Matrix &current_neuron_values,
+                                    size_t current_layer) const;
 
-  std::vector<float> CalculateHiddenLayerErrors(
-      const Matrix &neuron_values, const std::vector<float> &errors,
-      const Matrix &next_layer_weights, size_t current_layer) const;
+  Layer CalculateHiddenLayerErrors(const Matrix &neuron_values,
+                                   const Layer &errors,
+                                   const Matrix &next_layer_weights,
+                                   size_t current_layer) const;
 
   void UpdateWeights(const Matrix &delta_weights);
 
