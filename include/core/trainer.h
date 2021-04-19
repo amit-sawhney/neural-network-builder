@@ -24,16 +24,16 @@ public:
   void BackPropagate(Matrix *output_errors, const Matrix &neuron_values);
 
 private:
-  Matrix CalculateNextLayerWeights(const Layer &current_layer_weights,
-                                   size_t current_weight_idx) const;
+  Matrix CalculateNextLayerWeights(const Layer &layer_weights,
+                                   size_t weight_idx) const;
 
-  Layer CalculateNextNeurons(const Matrix &neurons, const Matrix &weights,
-                             size_t current_weight_idx) const;
+  Layer CalculateNextNeurons(const Matrix &neuron_values, const Matrix &weights,
+                             size_t weight_idx) const;
 
   Layer CalculateHiddenLayerWeights(const Layer &errors,
-                                    const Layer &current_weights,
-                                    const Matrix &current_neuron_values,
-                                    size_t current_layer) const;
+                                    const Layer &weights,
+                                    const Matrix &neuron_values,
+                                    size_t layer) const;
 
   Layer CalculateHiddenLayerErrors(const Matrix &neuron_values,
                                    const Layer &errors,
