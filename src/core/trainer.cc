@@ -27,13 +27,11 @@ Matrix Trainer::ForwardPropagate(const std::vector<float> &layer) {
   return neurons;
 }
 
-void Trainer::BackPropagate(const std::vector<float> &expected_values,
+void Trainer::BackPropagate(Matrix *output_errors,
                             const Matrix &neuron_values) {
 
   size_t penultimate_layer = neuron_values.size() - 2;
 
-  Matrix output_errors = {
-      CalculateErrorLayer(neuron_values.back(), expected_values)};
   Matrix total_weight_changes;
 
   for (size_t layer = penultimate_layer; layer >= 0; --layer) {
@@ -41,14 +39,14 @@ void Trainer::BackPropagate(const std::vector<float> &expected_values,
 
     Matrix next_layer_weights = CalculateNextLayerWeights(layer_weights, layer);
 
-    std::vector<float> errors = output_errors.back();
+    std::vector<float> errors = output_errors->back();
     std::vector<float> hidden_layer_delta_weights = CalculateHiddenLayerWeights(
         errors, layer_weights, neuron_values, layer);
 
     std::vector<float> hidden_layer_errors = CalculateHiddenLayerErrors(
         neuron_values, errors, next_layer_weights, layer);
 
-    output_errors.push_back(hidden_layer_errors);
+    output_errors->push_back(hidden_layer_errors);
     total_weight_changes.push_back(hidden_layer_delta_weights);
   }
 

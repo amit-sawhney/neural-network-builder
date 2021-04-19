@@ -4,8 +4,7 @@ namespace neural_network {
 
 Model::Model() : learning_rate_(0), num_neurons_(0) {}
 
-Model::Model(std::vector<size_t> neuron_layers,
-                                       float learning_rate)
+Model::Model(std::vector<size_t> neuron_layers, float learning_rate)
     : learning_rate_(learning_rate), neuron_layers_(std::move(neuron_layers)) {
 
   size_t neuron_count = 0;
@@ -19,16 +18,12 @@ Model::Model(std::vector<size_t> neuron_layers,
   InitializeModelWeights();
 }
 
-std::ostream &operator<<(std::ostream &output,
-                         const Model &model) {
+std::ostream &operator<<(std::ostream &output, const Model &model) {
 
   return output;
 }
 
-std::istream &operator>>(std::istream &input, Model &model) {
-
-  return input;
-}
+std::istream &operator>>(std::istream &input, Model &model) { return input; }
 
 void Model::Clear() {
   neuron_layers_.clear();
@@ -38,7 +33,7 @@ void Model::Clear() {
 }
 
 void Model::Train(size_t epochs, const Matrix &training_values,
-                               const Matrix &expected_values) {
+                  const Matrix &expected_values) {
 
   // Determines how many times model will train on the data
   for (size_t epoch = 0; epoch < epochs; ++epoch) {
@@ -47,7 +42,9 @@ void Model::Train(size_t epochs, const Matrix &training_values,
       std::vector<float> layer_values = training_values[layer];
 
       Matrix neuron_values = trainer_.ForwardPropagate(layer_values);
-      trainer_.BackPropagate(expected_values[layer], neuron_values);
+      Matrix output_errors = {trainer_.CalculateErrorLayer(
+          neuron_values.back(), expected_values[layer])};
+      trainer_.BackPropagate(&output_errors, neuron_values);
     }
   }
 }

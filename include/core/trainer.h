@@ -17,8 +17,11 @@ public:
 
   Matrix ForwardPropagate(const std::vector<float> &layer);
 
-  void BackPropagate(const std::vector<float> &expected_values,
-                       const Matrix &neuron_values);
+  std::vector<float>
+  CalculateErrorLayer(const std::vector<float> &actual_values,
+                      const std::vector<float> &expected_values) const;
+
+  void BackPropagate(Matrix *output_errors, const Matrix &neuron_values);
 
 private:
   Matrix
@@ -28,10 +31,6 @@ private:
   std::vector<float> CalculateNextNeurons(const Matrix &neurons,
                                           const Matrix &weights,
                                           size_t current_weight_idx) const;
-
-  std::vector<float>
-  CalculateErrorLayer(const std::vector<float> &actual_values,
-                      const std::vector<float> &expected_values) const;
 
   std::vector<float>
   CalculateHiddenLayerWeights(const std::vector<float> &errors,
