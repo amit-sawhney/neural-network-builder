@@ -8,12 +8,12 @@ namespace neural_network {
 
 typedef std::vector<std::vector<float>> Matrix;
 
-class NeuralNetworkTrainer {
+class Trainer {
 
 public:
-  NeuralNetworkTrainer();
+  Trainer();
 
-  NeuralNetworkTrainer(Matrix weights, std::vector<size_t> layer_sizes);
+  Trainer(Matrix weights, std::vector<size_t> layer_sizes);
 
   Matrix ForwardPropagate(const std::vector<float> &layer);
 

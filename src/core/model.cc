@@ -2,9 +2,9 @@
 
 namespace neural_network {
 
-NeuralNetworkModel::NeuralNetworkModel() : learning_rate_(0), num_neurons_(0) {}
+Model::Model() : learning_rate_(0), num_neurons_(0) {}
 
-NeuralNetworkModel::NeuralNetworkModel(std::vector<size_t> neuron_layers,
+Model::Model(std::vector<size_t> neuron_layers,
                                        float learning_rate)
     : learning_rate_(learning_rate), neuron_layers_(std::move(neuron_layers)) {
 
@@ -20,24 +20,24 @@ NeuralNetworkModel::NeuralNetworkModel(std::vector<size_t> neuron_layers,
 }
 
 std::ostream &operator<<(std::ostream &output,
-                         const NeuralNetworkModel &model) {
+                         const Model &model) {
 
   return output;
 }
 
-std::istream &operator>>(std::istream &input, NeuralNetworkModel &model) {
+std::istream &operator>>(std::istream &input, Model &model) {
 
   return input;
 }
 
-void NeuralNetworkModel::Clear() {
+void Model::Clear() {
   neuron_layers_.clear();
   model_weights_.clear();
   num_neurons_ = 0;
-  trainer_ = NeuralNetworkTrainer();
+  trainer_ = Trainer();
 }
 
-void NeuralNetworkModel::Train(size_t epochs, const Matrix &training_values,
+void Model::Train(size_t epochs, const Matrix &training_values,
                                const Matrix &expected_values) {
 
   // Determines how many times model will train on the data
@@ -52,7 +52,7 @@ void NeuralNetworkModel::Train(size_t epochs, const Matrix &training_values,
   }
 }
 
-void NeuralNetworkModel::InitializeModelWeights() {
+void Model::InitializeModelWeights() {
 
   for (size_t layer = 0; layer < neuron_layers_.size() - 1; ++layer) {
     std::vector<float> weights;
@@ -67,7 +67,7 @@ void NeuralNetworkModel::InitializeModelWeights() {
   }
 }
 
-float NeuralNetworkModel::GenerateRandWeight() const {
+float Model::GenerateRandWeight() const {
 
   // Choose weight value between 1 over the square root of the number of neurons
   // Note: Assumes the training dataset is standardized (X ~ N(0,1))
@@ -83,6 +83,6 @@ float NeuralNetworkModel::GenerateRandWeight() const {
   return min + random_inc;
 }
 
-Matrix NeuralNetworkModel::GetModelWeights() const { return model_weights_; }
+Matrix Model::GetModelWeights() const { return model_weights_; }
 
 } // namespace neural_network

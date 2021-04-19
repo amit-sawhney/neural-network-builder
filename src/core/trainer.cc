@@ -2,13 +2,13 @@
 
 namespace neural_network {
 
-NeuralNetworkTrainer::NeuralNetworkTrainer() = default;
+Trainer::Trainer() = default;
 
-NeuralNetworkTrainer::NeuralNetworkTrainer(Matrix weights,
+Trainer::Trainer(Matrix weights,
                                            std::vector<size_t> layer_sizes)
     : weights_(std::move(weights)), layer_sizes_(std::move(layer_sizes)) {}
 
-Matrix NeuralNetworkTrainer::ForwardPropagate(const std::vector<float> &layer) {
+Matrix Trainer::ForwardPropagate(const std::vector<float> &layer) {
 
   Matrix neurons{layer};
 
@@ -26,14 +26,16 @@ Matrix NeuralNetworkTrainer::ForwardPropagate(const std::vector<float> &layer) {
   return neurons;
 }
 
-Matrix
-NeuralNetworkTrainer::BackPropagate(const std::vector<float> &expected_values,
+Matrix Trainer::BackPropagate(const std::vector<float> &expected_values,
                                     const Matrix &neuron_values) {
+
+
+
 
   return Matrix{};
 }
 
-Matrix NeuralNetworkTrainer::CalculateNextLayerWeights(
+Matrix Trainer::CalculateNextLayerWeights(
     const std::vector<float> &current_layer_weights,
     size_t current_weight_idx) const {
 
@@ -63,7 +65,7 @@ Matrix NeuralNetworkTrainer::CalculateNextLayerWeights(
 }
 
 std::vector<float>
-NeuralNetworkTrainer::CalculateNextNeurons(const Matrix &neurons,
+Trainer::CalculateNextNeurons(const Matrix &neurons,
                                            const Matrix &weights,
                                            size_t current_weight_idx) const {
   std::vector<float> next_neurons;

@@ -3,11 +3,11 @@
 #include "core/model.h"
 
 using neural_network::Matrix;
-using neural_network::NeuralNetworkModel;
+using neural_network::Model;
 
 int main() {
-  
-  NeuralNetworkModel model({1, 2, 1}, 0.01f);
+
+  Model model({1, 2, 1}, 0.01f);
 
   Matrix weights = model.GetModelWeights();
 
