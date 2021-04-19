@@ -49,6 +49,10 @@ void Model::Train(size_t epochs, const Matrix &training_values,
   }
 }
 
+Layer Model::Predict(const Layer &input_layer) {
+  return trainer_.ForwardPropagate(input_layer).back();
+}
+
 Matrix Model::InitializeModelWeights(const std::vector<size_t> &layers) {
 
   Matrix weights;

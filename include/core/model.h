@@ -28,6 +28,8 @@ public:
   void Train(size_t epochs, const Matrix &training_values,
              const Matrix &expected_values);
 
+  Layer Predict(const Layer &input_layer);
+
   /**
    * Clears the Neural Network of it's current values
    */

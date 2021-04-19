@@ -15,5 +15,9 @@ int main() {
 
   model.Train(10, train_values, expected);
 
+  float ans = model.Predict({1, 0}).at(0);
+
+  std::cout << ans << std::endl;
+
   return 0;
 }
