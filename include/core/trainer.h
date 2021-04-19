@@ -17,7 +17,7 @@ public:
 
   Matrix ForwardPropagate(const std::vector<float> &layer);
 
-  Matrix BackPropagate(const std::vector<float> &expected_values,
+  void BackPropagate(const std::vector<float> &expected_values,
                        const Matrix &neuron_values);
 
 private:

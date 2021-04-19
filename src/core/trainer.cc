@@ -27,8 +27,8 @@ Matrix Trainer::ForwardPropagate(const std::vector<float> &layer) {
   return neurons;
 }
 
-Matrix Trainer::BackPropagate(const std::vector<float> &expected_values,
-                              const Matrix &neuron_values) {
+void Trainer::BackPropagate(const std::vector<float> &expected_values,
+                            const Matrix &neuron_values) {
 
   size_t penultimate_layer = neuron_values.size() - 2;
 
@@ -53,8 +53,6 @@ Matrix Trainer::BackPropagate(const std::vector<float> &expected_values,
   }
 
   UpdateWeights(total_weight_changes);
-
-  return Matrix{};
 }
 
 std::vector<float> Trainer::CalculateHiddenLayerErrors(
@@ -66,12 +64,12 @@ std::vector<float> Trainer::CalculateHiddenLayerErrors(
   for (size_t layer_idx = 0; layer_idx < layer_sizes_[current_layer];
        ++layer_idx) {
 
-    // Multiply the corresponding row and col
-    float product =
-        ModelMath::CalculateDotProduct(errors, next_layer_weights[layer_idx]);
+    // Multiply the corresponding row and column
+    std::vector<float> next_layer = next_layer_weights[layer_idx];
+    float product = ModelMath::CalculateDotProduct(errors, next_layer);
 
-    product *= ModelMath::CalculateSigmoidDerivative(
-        neuron_values[current_layer][layer_idx]);
+    float neuron_value = neuron_values[current_layer][layer_idx];
+    product *= ModelMath::CalculateSigmoidDerivative(neuron_value);
 
     layer_errors.push_back(product);
   }
