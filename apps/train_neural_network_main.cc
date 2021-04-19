@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "core/neural_network_model.h"
+#include "core/model.h"
 
 using neural_network::Matrix;
 using neural_network::NeuralNetworkModel;

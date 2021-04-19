@@ -1,4 +1,4 @@
-#include "core/neural_network_model.h"
+#include "core/model.h"
 
 namespace neural_network {
 
@@ -19,6 +19,17 @@ NeuralNetworkModel::NeuralNetworkModel(std::vector<size_t> neuron_layers,
   InitializeModelWeights();
 }
 
+std::ostream &operator<<(std::ostream &output,
+                         const NeuralNetworkModel &model) {
+
+  return output;
+}
+
+std::istream &operator>>(std::istream &input, NeuralNetworkModel &model) {
+
+  return input;
+}
+
 void NeuralNetworkModel::Clear() {
   neuron_layers_.clear();
   model_weights_.clear();
@@ -35,21 +46,10 @@ void NeuralNetworkModel::Train(size_t epochs, const Matrix &training_values,
     for (size_t layer = 0; layer < training_values.size(); ++layer) {
       std::vector<float> layer_values = training_values[layer];
 
-      const Matrix neuron_values = trainer_.ForwardPropagate(layer_values);
+      Matrix neuron_values = trainer_.ForwardPropagate(layer_values);
       trainer_.BackPropagate(expected_values[layer], neuron_values);
     }
   }
-}
-
-std::ostream &operator<<(std::ostream &output,
-                         const NeuralNetworkModel &model) {
-
-  return output;
-}
-
-std::istream &operator>>(std::istream &input, NeuralNetworkModel &model) {
-
-  return input;
 }
 
 void NeuralNetworkModel::InitializeModelWeights() {

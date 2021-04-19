@@ -1,6 +1,6 @@
 #pragma once
 
-#include "neural_network_trainer.h"
+#include "trainer.h"
 #include <vector>
 namespace neural_network {
 

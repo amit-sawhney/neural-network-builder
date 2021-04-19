@@ -1,4 +1,4 @@
-#include "core/neural_network_trainer.h"
+#include "core/trainer.h"
 
 namespace neural_network {
 
