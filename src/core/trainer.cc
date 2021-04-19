@@ -2,11 +2,12 @@
 
 namespace neural_network {
 
-Trainer::Trainer() = default;
+Trainer::Trainer() : learning_rate_(0) {}
 
-Trainer::Trainer(Matrix weights,
-                                           std::vector<size_t> layer_sizes)
-    : weights_(std::move(weights)), layer_sizes_(std::move(layer_sizes)) {}
+Trainer::Trainer(Matrix weights, std::vector<size_t> layer_sizes,
+                 float learning_rate)
+    : weights_(std::move(weights)), layer_sizes_(std::move(layer_sizes)),
+      learning_rate_(learning_rate) {}
 
 Matrix Trainer::ForwardPropagate(const std::vector<float> &layer) {
 
@@ -27,12 +28,95 @@ Matrix Trainer::ForwardPropagate(const std::vector<float> &layer) {
 }
 
 Matrix Trainer::BackPropagate(const std::vector<float> &expected_values,
-                                    const Matrix &neuron_values) {
+                              const Matrix &neuron_values) {
 
+  size_t penultimate_layer = neuron_values.size() - 2;
 
+  Matrix output_errors = {
+      CalculateErrorLayer(neuron_values.back(), expected_values)};
+  Matrix total_weight_changes;
 
+  for (size_t layer = penultimate_layer; layer >= 0; --layer) {
+    std::vector<float> layer_weights = weights_[layer];
+
+    Matrix next_layer_weights = CalculateNextLayerWeights(layer_weights, layer);
+
+    std::vector<float> errors = output_errors.back();
+    std::vector<float> hidden_layer_delta_weights = CalculateHiddenLayerWeights(
+        errors, layer_weights, neuron_values, layer);
+
+    std::vector<float> hidden_layer_errors;
+    // Matrix multiplication
+    for (size_t layer_idx = 0; layer_idx < layer_sizes_[layer]; ++layer_idx) {
+
+      // Multiply the corresponding row and col
+      float product =
+          ModelMath::CalculateDotProduct(errors, next_layer_weights[layer_idx]);
+
+      product *= ModelMath::CalculateSigmoidDerivative(
+          neuron_values[layer][layer_idx]);
+
+      hidden_layer_errors.push_back(product);
+    }
+
+    output_errors.push_back(hidden_layer_errors);
+    total_weight_changes.push_back(hidden_layer_delta_weights);
+  }
+
+  UpdateWeights(total_weight_changes);
 
   return Matrix{};
+}
+
+void Trainer::UpdateWeights(const Matrix &delta_weights) {
+
+  for (size_t row = 0; row < weights_.size(); ++row) {
+    for (size_t col = 0; col < weights_.size(); ++col) {
+
+      // Update the values of the weight matrix with the correct deltas
+      weights_[row][col] += delta_weights[delta_weights.size() - 1 - row][col];
+    }
+  }
+}
+
+std::vector<float> Trainer::CalculateHiddenLayerWeights(
+    const std::vector<float> &errors, const std::vector<float> &current_weights,
+    const Matrix &current_neuron_values, size_t current_layer) const {
+
+  std::vector<float> delta_weights;
+
+  for (size_t weight_idx = 0; weight_idx < current_weights.size();
+       ++weight_idx) {
+    size_t prev_neuron = weight_idx / layer_sizes_[current_layer + 1];
+    size_t new_neuron_idx = weight_idx % layer_sizes_[current_layer + 1];
+
+    float new_neuron_error = errors[new_neuron_idx];
+    float new_neuron_weight =
+        new_neuron_error * current_neuron_values[current_layer][prev_neuron];
+
+    // Adjust step size but learning rate
+    new_neuron_weight *= learning_rate_;
+
+    delta_weights.emplace_back(new_neuron_weight);
+  }
+
+  return delta_weights;
+}
+
+std::vector<float>
+Trainer::CalculateErrorLayer(const std::vector<float> &actual_values,
+                             const std::vector<float> &expected_values) const {
+
+  std::vector<float> errors;
+  for (size_t value_idx = 0; value_idx < expected_values.size(); ++value_idx) {
+    float expected = expected_values[value_idx];
+    float actual = actual_values[value_idx];
+
+    float error = ModelMath::CalculatePointError(expected, actual);
+    errors.push_back(error);
+  }
+
+  return errors;
 }
 
 Matrix Trainer::CalculateNextLayerWeights(
@@ -65,9 +149,8 @@ Matrix Trainer::CalculateNextLayerWeights(
 }
 
 std::vector<float>
-Trainer::CalculateNextNeurons(const Matrix &neurons,
-                                           const Matrix &weights,
-                                           size_t current_weight_idx) const {
+Trainer::CalculateNextNeurons(const Matrix &neurons, const Matrix &weights,
+                              size_t current_weight_idx) const {
   std::vector<float> next_neurons;
 
   for (size_t layer = 0; layer < layer_sizes_[current_weight_idx + 1];

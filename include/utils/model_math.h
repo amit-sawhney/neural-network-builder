@@ -1,6 +1,9 @@
 #pragma once
 
+#include <core/trainer.h>
 #include <vector>
+
+namespace neural_network {
 
 /**
  * Basic mathematical calculations associated with a Neural Network
@@ -29,13 +32,11 @@ public:
   /**
    * Determines the Mean Squared Error (MSE) between two sets of data
    *
-   * @param expected_values the expected data values
-   * @param actual_values the actual data values
+   * @param expected the expected data values
+   * @param actual the actual data values
    * @return the MSE
    */
-  static float
-  CalculateMeanSquaredError(const std::vector<float> &expected_values,
-                            const std::vector<float> &actual_values);
+  static float CalculatePointError(float expected, float actual);
 
   /**
    * Calculates the dot product between two vectors
@@ -46,5 +47,5 @@ public:
    */
   static float CalculateDotProduct(const std::vector<float> &vector1,
                                    const std::vector<float> &vector2);
-  
 };
+} // namespace neural_network

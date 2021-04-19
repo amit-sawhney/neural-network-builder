@@ -1,5 +1,6 @@
 #include "utils/model_math.h"
 
+namespace neural_network {
 float ModelMath::CalculateSigmoid(float value) {
   return 1 / (1 + std::exp(-value));
 }
@@ -12,24 +13,11 @@ float ModelMath::CalculateSigmoidDerivative(float value, bool isSigmoidValue) {
   return CalculateSigmoid(value) * (1 - CalculateSigmoid(value));
 }
 
-float ModelMath::CalculateMeanSquaredError(
-    const std::vector<float> &expected_values,
-    const std::vector<float> &actual_values) {
+float ModelMath::CalculatePointError(float expected, float actual) {
 
-  if (expected_values.size() != actual_values.size()) {
-    throw std::invalid_argument("Values dimensions are not equal");
-  }
+  float point_diff = expected - actual;
 
-  float total_error = 0;
-  size_t num_values = expected_values.size();
-
-  for (size_t value = 0; value < num_values; ++value) {
-
-    float value_diff = actual_values[value] - expected_values[value];
-    total_error += std::pow(value_diff, 2);
-  }
-
-  return total_error / num_values;
+  return point_diff * CalculateSigmoidDerivative(actual);
 }
 
 float ModelMath::CalculateDotProduct(const std::vector<float> &vector1,
@@ -47,3 +35,4 @@ float ModelMath::CalculateDotProduct(const std::vector<float> &vector1,
 
   return total_sum;
 }
+} // namespace neural_network
