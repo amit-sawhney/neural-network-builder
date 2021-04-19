@@ -21,10 +21,31 @@ public:
    */
   Model(const std::vector<size_t> &neuron_layers, float learning_rate);
 
+  /**
+   * Overrides the output operator to handle serializing a neural network
+   *
+   * @param output the output stream to utilize
+   * @param model the model to serialize
+   * @return the output stream
+   */
   friend std::ostream &operator<<(std::ostream &output, const Model &model);
 
+  /**
+   * Overrides the input operator to handle deserializing a neural network
+   *
+   * @param input the input stream to utilize
+   * @param model the model to deserialize
+   * @return the input stream
+   */
   friend std::istream &operator>>(std::istream &input, Model &model);
 
+  /**
+   * Trains the neural network on a certain set of data
+   *
+   * @param epochs the number of times the neural network will see the data
+   * @param training_values the set training data to train on
+   * @param expected_values the expected output of the training values
+   */
   void Train(size_t epochs, const Matrix &training_values,
              const Matrix &expected_values);
 
@@ -36,8 +57,18 @@ public:
   void Clear();
 
 private:
+  /**
+   * Initializes the neuron weights of the neural network
+   *
+   * @param layers the size of each layer
+   * @return the randomly generated weights
+   */
   Matrix InitializeModelWeights(const std::vector<size_t> &layers);
 
+  /**
+   * Generates a random weight for the a single neuron of the network
+   * @return the random weight
+   */
   float GenerateRandomWeight() const;
 
   size_t num_neurons_;

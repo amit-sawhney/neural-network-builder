@@ -38,12 +38,17 @@ void Model::Train(size_t epochs, const Matrix &training_values,
   for (size_t epoch = 0; epoch < epochs; ++epoch) {
     std::cout << "Epoch  " << epoch << "......................" << std::endl;
 
-    for (size_t layer = 0; layer < training_values.size(); ++layer) {
-      Layer layer_values = training_values[layer];
+    for (size_t layer_index = 0; layer_index < training_values.size();
+         ++layer_index) {
+      Layer layer = training_values[layer_index];
 
-      Matrix neuron_values = trainer_.ForwardPropagate(layer_values);
-      Matrix output_errors = {trainer_.CalculateErrorLayer(
-          neuron_values.back(), expected_values[layer])};
+      Matrix neuron_values = trainer_.ForwardPropagate(layer);
+
+      Layer output_layer = neuron_values.back();
+      Layer expected_layer = expected_values[layer_index];
+      Matrix output_errors{
+          trainer_.CalculateErrorLayer(output_layer, expected_layer)};
+
       trainer_.BackPropagate(&output_errors, neuron_values);
     }
   }
