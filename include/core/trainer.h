@@ -27,11 +27,13 @@ private:
   Matrix CalculateNextLayerWeights(const Layer &layer_weights,
                                    size_t weight_idx) const;
 
+  Matrix CalculatePreviousLayerWeights(const Layer &layer_weights,
+                                       size_t weight_idx) const;
+
   Layer CalculateNextNeurons(const Matrix &neuron_values, const Matrix &weights,
                              size_t weight_idx) const;
 
-  Layer CalculateHiddenLayerWeights(const Layer &errors,
-                                    const Layer &weights,
+  Layer CalculateHiddenLayerWeights(const Layer &errors, const Layer &weights,
                                     const Matrix &neuron_values,
                                     size_t layer) const;
 

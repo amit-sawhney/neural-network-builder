@@ -1,4 +1,5 @@
 #include "core/model.h"
+#include <iostream>
 
 namespace neural_network {
 
@@ -35,6 +36,7 @@ void Model::Train(size_t epochs, const Matrix &training_values,
 
   // Determines how many times model will train on the data
   for (size_t epoch = 0; epoch < epochs; ++epoch) {
+    std::cout << "Epoch  " << epoch << "......................" << std::endl;
 
     for (size_t layer = 0; layer < training_values.size(); ++layer) {
       Layer layer_values = training_values[layer];

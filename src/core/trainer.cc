@@ -33,10 +33,11 @@ void Trainer::BackPropagate(Matrix *output_errors,
   Matrix weight_changes;
 
   // Go across matrix backwards
-  for (size_t layer = penultimate_layer; layer >= 0; --layer) {
+  for (int layer = penultimate_layer; layer >= 0; --layer) {
     Layer layer_weights = weights_[layer];
 
-    Matrix next_layer_weights = CalculateNextLayerWeights(layer_weights, layer);
+    Matrix next_layer_weights =
+        CalculatePreviousLayerWeights(layer_weights, layer);
 
     Layer errors = output_errors->back();
     Layer hidden_layer_delta_weights = CalculateHiddenLayerWeights(
@@ -124,6 +125,31 @@ Layer Trainer::CalculateErrorLayer(const Layer &actual_values,
   return errors;
 }
 
+Matrix Trainer::CalculatePreviousLayerWeights(const Layer &layer_weights,
+                                              size_t weight_idx) const {
+  Matrix next_layer_weights;
+
+  for (size_t neuron = 0; neuron < layer_sizes_[weight_idx]; ++neuron) {
+
+    Layer neuron_weights;
+
+    for (size_t layer_idx = 0; layer_idx < layer_sizes_[weight_idx + 1];
+         ++layer_idx) {
+
+      size_t next_neurons_size = layer_sizes_[weight_idx + 1];
+
+      // Calculate the next neuron weight
+      float next_weight = layer_weights[neuron * next_neurons_size + layer_idx];
+
+      neuron_weights.emplace_back(next_weight);
+    }
+
+    next_layer_weights.emplace_back(neuron_weights);
+  }
+
+  return next_layer_weights;
+}
+
 Matrix Trainer::CalculateNextLayerWeights(const Layer &layer_weights,
                                           size_t weight_idx) const {
 
@@ -147,7 +173,7 @@ Matrix Trainer::CalculateNextLayerWeights(const Layer &layer_weights,
     next_layer_weights.emplace_back(neuron_weights);
   }
 
-  return Matrix{};
+  return next_layer_weights;
 }
 
 Layer Trainer::CalculateNextNeurons(const Matrix &neuron_values,
