@@ -2,20 +2,20 @@
 
 namespace neural_network {
 
-Model::Model() : learning_rate_(0), num_neurons_(0) {}
+Model::Model() : num_neurons_(0) {}
 
-Model::Model(std::vector<size_t> neuron_layers, float learning_rate)
-    : learning_rate_(learning_rate), neuron_layers_(std::move(neuron_layers)) {
+Model::Model(const std::vector<size_t> &neuron_layers, float learning_rate) {
 
   size_t neuron_count = 0;
 
-  for (size_t neuron_layer : neuron_layers_) {
+  for (size_t neuron_layer : neuron_layers) {
     neuron_count += neuron_layer;
   }
 
   num_neurons_ = neuron_count;
 
-  InitializeModelWeights();
+  Matrix weights = InitializeModelWeights(neuron_layers);
+  trainer_ = Trainer(weights, neuron_layers, learning_rate);
 }
 
 std::ostream &operator<<(std::ostream &output, const Model &model) {
@@ -26,8 +26,6 @@ std::ostream &operator<<(std::ostream &output, const Model &model) {
 std::istream &operator>>(std::istream &input, Model &model) { return input; }
 
 void Model::Clear() {
-  neuron_layers_.clear();
-  model_weights_.clear();
   num_neurons_ = 0;
   trainer_ = Trainer();
 }
@@ -49,22 +47,26 @@ void Model::Train(size_t epochs, const Matrix &training_values,
   }
 }
 
-void Model::InitializeModelWeights() {
+Matrix Model::InitializeModelWeights(const std::vector<size_t> &layers) {
 
-  for (size_t layer = 0; layer < neuron_layers_.size() - 1; ++layer) {
-    std::vector<float> weights;
+  Matrix weights;
 
-    size_t weights_size = neuron_layers_[layer] * neuron_layers_[layer + 1];
+  for (size_t layer = 0; layer < layers.size() - 1; ++layer) {
+    std::vector<float> layer_weights;
+
+    size_t weights_size = layers[layer] * layers[layer + 1];
 
     for (size_t weight = 0; weight < weights_size; ++weight) {
-      weights.emplace_back(GenerateRandWeight());
+      layer_weights.emplace_back(GenerateRandomWeight());
     }
 
-    model_weights_.emplace_back(weights);
+    weights.emplace_back(layer_weights);
   }
+
+  return weights;
 }
 
-float Model::GenerateRandWeight() const {
+float Model::GenerateRandomWeight() const {
 
   // Choose weight value between 1 over the square root of the number of neurons
   // Note: Assumes the training dataset is standardized (X ~ N(0,1))
@@ -79,7 +81,5 @@ float Model::GenerateRandWeight() const {
 
   return min + random_inc;
 }
-
-Matrix Model::GetModelWeights() const { return model_weights_; }
 
 } // namespace neural_network

@@ -19,7 +19,7 @@ public:
    *
    * @param neuron_layers the specified number of layers and neurons per layer
    */
-  Model(std::vector<size_t> neuron_layers, float learning_rate);
+  Model(const std::vector<size_t> &neuron_layers, float learning_rate);
 
   friend std::ostream &operator<<(std::ostream &output, const Model &model);
 
@@ -33,17 +33,12 @@ public:
    */
   void Clear();
 
-  Matrix GetModelWeights() const;
-
 private:
-  void InitializeModelWeights();
+  Matrix InitializeModelWeights(const std::vector<size_t> &layers);
 
-  float GenerateRandWeight() const;
+  float GenerateRandomWeight() const;
 
-  Matrix model_weights_;
-  std::vector<size_t> neuron_layers_;
   size_t num_neurons_;
-  float learning_rate_;
   Trainer trainer_;
 };
 
