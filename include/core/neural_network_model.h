@@ -27,7 +27,7 @@ public:
   friend std::istream &operator>>(std::istream &input,
                                   NeuralNetworkModel &model);
 
-  void Train(size_t epochs, const Matrix &input, const Matrix &output);
+  void Train(size_t epochs, const Matrix &training_values, const Matrix &expected_values);
 
   /**
    * Clears the Neural Network of it's current values

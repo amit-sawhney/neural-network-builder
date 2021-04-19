@@ -26,8 +26,20 @@ void NeuralNetworkModel::Clear() {
   trainer_ = NeuralNetworkTrainer();
 }
 
-void NeuralNetworkModel::Train(size_t epochs, const Matrix &input,
-                               const Matrix &output) {}
+void NeuralNetworkModel::Train(size_t epochs, const Matrix &training_values,
+                               const Matrix &expected_values) {
+
+  // Determines how many times model will train on the data
+  for (size_t epoch = 0; epoch < epochs; ++epoch) {
+
+    for (size_t layer = 0; layer < training_values.size(); ++layer) {
+      std::vector<float> layer_values = training_values[layer];
+
+      const Matrix neuron_values = trainer_.ForwardPropagate(layer_values);
+      trainer_.BackPropagate(expected_values[layer], neuron_values);
+    }
+  }
+}
 
 std::ostream &operator<<(std::ostream &output,
                          const NeuralNetworkModel &model) {

@@ -10,16 +10,14 @@ class NeuralNetworkTrainer {
 public:
   NeuralNetworkTrainer();
 
+  NeuralNetworkTrainer(Matrix weights, std::vector<size_t> layer_sizes);
+
   Matrix ForwardPropagate(const std::vector<float> &neuron_values);
 
-  Matrix BackPropagate(const std::vector<float> &neuron_values);
+  Matrix BackPropagate(const std::vector<float> &expected_values,
+                       const Matrix &neuron_values);
 
-  float CalculatePointError(const std::vector<float> &expected_values,
-                            const std::vector<float> &actual_values);
-
-private:
-  float SigmoidActivator(float value) const;
-
-  float SigmoidActivatorDerivative(float value) const;
+  Matrix weights_;
+  std::vector<size_t> layer_sizes_;
 };
 } // namespace neural_network
