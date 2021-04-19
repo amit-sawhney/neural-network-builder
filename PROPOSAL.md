@@ -4,7 +4,7 @@ Amit Sawhney
 
 ### Project Description
 
-This C++ applicationw will allow users to utilize User Interface based interaction to construct and customize the architecture of a Neural Network. Visual based construction 	will allow for a better understand of the mathematical flow of Machine Learning and Neural Networks serving as a learning point of building simple neural network flows.
+This C++ application will allow users to utilize User Interface based interaction to construct and customize the architecture of a Neural Network. Visual based construction 	will allow for a better understand of the mathematical flow of Machine Learning and Neural Networks serving as a learning point of building simple neural network flows.
 
 ### Background/Passion
 

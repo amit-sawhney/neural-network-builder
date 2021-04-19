@@ -49,11 +49,9 @@ get_filename_component(APP_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" ABSOLUTE)
 
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
-list(APPEND CORE_SOURCE_FILES src/core/model.cc src/core/trainer.cc)
+list(APPEND CORE_SOURCE_FILES src/core/model.cc src/core/trainer.cc src/utils/model_math.cc)
 
-list(APPEND UTILS_SOURCE_FILES ${CORE_SOURCE_FILES} src/utils/math.cc)
-
-list(APPEND SOURCE_FILES ${UTILS_SOURCE_FILES} src/visualizer/neural_network_builder.cc)
+list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES} src/visualizer/neural_network_builder.cc)
 
 list(APPEND TEST_FILES tests/core/test_neural_network_model.cc)
 

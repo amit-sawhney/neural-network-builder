@@ -1,12 +1,11 @@
 #pragma once
 
 #include <vector>
-namespace neural_network {
 
 /**
  * Basic mathematical calculations associated with a Neural Network
  */
-class Math {
+class ModelMath {
 
 public:
   /**
@@ -37,5 +36,15 @@ public:
   static float
   CalculateMeanSquaredError(const std::vector<float> &expected_values,
                             const std::vector<float> &actual_values);
+
+  /**
+   * Calculates the dot product between two vectors
+   *
+   * @param vector1 the first vector
+   * @param vector2 the second vector
+   * @return the sum of the products of each parallel element in the vectors
+   */
+  static float CalculateDotProduct(const std::vector<float> &vector1,
+                                   const std::vector<float> &vector2);
+  
 };
-} // namespace neural_network

@@ -6,7 +6,7 @@ using neural_network::Matrix;
 using neural_network::NeuralNetworkModel;
 
 int main() {
-
+  
   NeuralNetworkModel model({1, 2, 1}, 0.01f);
 
   Matrix weights = model.GetModelWeights();
