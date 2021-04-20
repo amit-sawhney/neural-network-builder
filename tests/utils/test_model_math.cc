@@ -188,3 +188,29 @@ TEST_CASE("Dot Product Calculations") {
     REQUIRE(product1 == product2);
   }
 }
+
+TEST_CASE("Error Layer Calculations") {
+
+  SECTION("Invalid layer sizes") {
+    std::vector<float> empty_layer{};
+    std::vector<float> filled_layer{0};
+
+    REQUIRE_THROWS(ModelMath::CalculateErrorLayer(empty_layer, filled_layer));
+  }
+
+  SECTION("Correct error values") {
+    std::vector<float> empty_layer{1, 0, -1};
+    std::vector<float> filled_layer{-2, 1, 0};
+
+    std::vector<float> error_layer =
+        ModelMath::CalculateErrorLayer(empty_layer, filled_layer);
+    std::vector<float> expected_error_layer{-0.58984f, 0.25f, 0.19661f};
+
+    REQUIRE(expected_error_layer.at(0) ==
+            Approx(error_layer.at(0)).epsilon(kCalculationTolerance));
+    REQUIRE(expected_error_layer.at(1) ==
+            Approx(error_layer.at(1)).epsilon(kCalculationTolerance));
+    REQUIRE(expected_error_layer.at(2) ==
+            Approx(error_layer.at(2)).epsilon(kCalculationTolerance));
+  }
+}
