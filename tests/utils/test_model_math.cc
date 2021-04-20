@@ -118,7 +118,7 @@ TEST_CASE("Point Error Calculations") {
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
   }
 
-  SECTION("No error input") {
+  SECTION("Zero error input") {
     float expected_input = 1;
     float actual_input = 1;
 
@@ -126,5 +126,65 @@ TEST_CASE("Point Error Calculations") {
     float expected_error = 0;
 
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
+  }
+}
+
+TEST_CASE("Dot Product Calculations") {
+
+  SECTION("Invalid dimensions") {
+    std::vector<float> vector1;
+    std::vector<float> vector2{1.0f};
+
+    REQUIRE_THROWS(ModelMath::CalculateDotProduct(vector1, vector2));
+  }
+
+  SECTION("Positive values in both vectors") {
+    std::vector<float> vector1{1, 2};
+    std::vector<float> vector2{1, 2};
+
+    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float expected_product = 5.0f;
+
+    REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
+  }
+
+  SECTION("Negative values in both vectors") {
+    std::vector<float> vector1{-1, -2};
+    std::vector<float> vector2{-1, -2};
+
+    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float expected_product = 5.0f;
+
+    REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
+  }
+
+  SECTION("Mixed values in both vectors") {
+    std::vector<float> vector1{-1, -2};
+    std::vector<float> vector2{1, 2};
+
+    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float expected_product = -5.0f;
+
+    REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
+  }
+
+  SECTION("Orthogonal vectors") {
+    std::vector<float> vector1{1, 1};
+    std::vector<float> vector2{-1, 1};
+
+    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float expected_product = 0.0f;
+
+    REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
+  }
+
+  SECTION("Order insensitive") {
+    std::vector<float> vector1{-1, -2};
+    std::vector<float> vector2{1, 2};
+
+    float product1 = ModelMath::CalculateDotProduct(vector1, vector2);
+    float product2 = ModelMath::CalculateDotProduct(vector2, vector1);
+
+    REQUIRE(product1 == product2);
   }
 }
