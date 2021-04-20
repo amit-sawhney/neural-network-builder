@@ -40,6 +40,10 @@ std::vector<float>
 ModelMath::CalculateErrorLayer(const std::vector<float> &actual_values,
                                const std::vector<float> &expected_values) {
 
+  if (actual_values.size() != expected_values.size()) {
+    throw std::invalid_argument("Layer sizes are not equal");
+  }
+
   std::vector<float> errors;
   for (size_t value_idx = 0; value_idx < expected_values.size(); ++value_idx) {
     float expected = expected_values[value_idx];
