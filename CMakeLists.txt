@@ -53,7 +53,7 @@ list(APPEND CORE_SOURCE_FILES src/core/model.cc src/core/trainer.cc src/utils/mo
 
 list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES} src/visualizer/neural_network_builder.cc)
 
-list(APPEND TEST_FILES tests/core/test_neural_network_model.cc)
+list(APPEND TEST_FILES tests/core/test_model.cc tests/utils/test_model_math.cc tests/core/test_model_trainer.cc)
 
 add_executable(train-neural-network apps/train_neural_network_main.cc ${CORE_SOURCE_FILES})
 target_include_directories(train-neural-network PRIVATE include)
