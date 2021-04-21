@@ -13,7 +13,6 @@ Model::Model(const std::vector<size_t> &neuron_layers, float learning_rate) {
   }
 
   num_neurons_ = neuron_count;
-
   Matrix weights = InitializeModelWeights(neuron_layers);
   trainer_ = Trainer(weights, neuron_layers, learning_rate);
 }
@@ -61,6 +60,7 @@ void Model::Train(size_t epochs, const Matrix &training_values,
 }
 
 Layer Model::Predict(const Layer &input_layer) {
+  // Feed the input into the network and get the output layer
   return trainer_.ForwardPropagate(input_layer).back();
 }
 

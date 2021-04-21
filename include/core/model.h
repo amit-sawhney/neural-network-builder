@@ -73,6 +73,7 @@ private:
 
   /**
    * Generates a random weight for the a single neuron of the network
+   *
    * @return the random weight
    */
   float GenerateRandomWeight() const;
