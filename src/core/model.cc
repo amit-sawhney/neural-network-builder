@@ -1,4 +1,5 @@
 #include "core/model.h"
+#include <iostream>
 
 namespace neural_network {
 
