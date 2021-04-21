@@ -11,6 +11,10 @@ Trainer::Trainer(Matrix weights, std::vector<size_t> layer_sizes,
 
 Matrix Trainer::ForwardPropagate(const Layer &layer) {
 
+  if (layer.size() != layer_sizes_.at(0)) {
+    throw std::invalid_argument("Cannot propagate layer. Invalid size");
+  }
+
   Matrix neurons{layer};
 
   for (size_t weight = 0; weight < weights_.size(); ++weight) {
@@ -182,5 +186,9 @@ Layer Trainer::CalculateNextNeurons(const Matrix &neuron_values,
 
   return next_neurons;
 }
+
+float Trainer::GetLearningRate() const { return learning_rate_; }
+
+Matrix Trainer::GetWeights() const { return weights_; }
 
 } // namespace neural_network

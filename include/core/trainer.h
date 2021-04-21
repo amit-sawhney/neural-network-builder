@@ -45,6 +45,10 @@ public:
    */
   void BackPropagate(Matrix *output_errors, const Matrix &neuron_values);
 
+  Matrix GetWeights() const;
+
+  float GetLearningRate() const;
+
 private:
   /**
    * Calculates the next set of layer weights on a forward propagation execution
