@@ -1,7 +1,9 @@
 #pragma once
 
-#include "trainer.h"
 #include <vector>
+
+#include "trainer.h"
+
 namespace neural_network {
 
 // Mathematical calculations and code were derived from below
