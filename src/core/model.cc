@@ -21,10 +21,17 @@ Model::Model(const std::vector<size_t> &neuron_layers, float learning_rate) {
 
 std::ostream &operator<<(std::ostream &output, const Model &model) {
 
+  // TODO: Implement operator for week 3
+
   return output;
 }
 
-std::istream &operator>>(std::istream &input, Model &model) { return input; }
+std::istream &operator>>(std::istream &input, Model &model) {
+
+  // TODO: Implement operator for week 3
+
+  return input;
+}
 
 void Model::Clear() {
   num_neurons_ = 0;
