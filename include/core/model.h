@@ -56,6 +56,10 @@ public:
    */
   void Clear();
 
+  Trainer GetTrainer() const;
+
+  size_t GetNumNeurons() const;
+
 private:
   /**
    * Initializes the neuron weights of the neural network

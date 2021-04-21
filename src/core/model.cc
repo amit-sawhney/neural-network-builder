@@ -65,6 +65,7 @@ Matrix Model::InitializeModelWeights(const std::vector<size_t> &layers) {
   for (size_t layer = 0; layer < layers.size() - 1; ++layer) {
     Layer layer_weights;
 
+    // Weight layer size is the current layer's size * the next layer size
     size_t weights_size = layers[layer] * layers[layer + 1];
 
     for (size_t weight = 0; weight < weights_size; ++weight) {
@@ -92,5 +93,9 @@ float Model::GenerateRandomWeight() const {
 
   return min + random_inc;
 }
+
+Trainer Model::GetTrainer() const { return trainer_; }
+
+size_t Model::GetNumNeurons() const { return num_neurons_; }
 
 } // namespace neural_network
