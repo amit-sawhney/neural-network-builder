@@ -53,7 +53,7 @@ void Model::Train(size_t epochs, const Matrix &training_values,
       Layer output_layer = neuron_values.back();
       Layer expected_layer = expected_values[layer_index];
       Matrix output_errors{
-          ModelMath::CalculateErrorLayer(output_layer, expected_layer)};
+          CalculateErrorLayer(output_layer, expected_layer)};
 
       trainer_.BackPropagate(&output_errors, neuron_values);
     }

@@ -1,11 +1,12 @@
 #include "utils/model_math.h"
 
 namespace neural_network {
-float ModelMath::CalculateSigmoid(float value) {
+
+float CalculateSigmoid(float value) {
   return 1 / (1 + std::exp(-value));
 }
 
-float ModelMath::CalculateSigmoidDerivative(float value, bool isSigmoidValue) {
+float CalculateSigmoidDerivative(float value, bool isSigmoidValue) {
   if (isSigmoidValue) {
     return value * (1 - value);
   }
@@ -13,14 +14,14 @@ float ModelMath::CalculateSigmoidDerivative(float value, bool isSigmoidValue) {
   return CalculateSigmoid(value) * (1 - CalculateSigmoid(value));
 }
 
-float ModelMath::CalculatePointError(float expected, float actual) {
+float CalculatePointError(float expected, float actual) {
 
   float point_diff = expected - actual;
 
   return point_diff * CalculateSigmoidDerivative(actual);
 }
 
-float ModelMath::CalculateDotProduct(const std::vector<float> &vector1,
+float CalculateDotProduct(const std::vector<float> &vector1,
                                      const std::vector<float> &vector2) {
 
   if (vector1.size() != vector2.size()) {
@@ -37,7 +38,7 @@ float ModelMath::CalculateDotProduct(const std::vector<float> &vector1,
 }
 
 std::vector<float>
-ModelMath::CalculateErrorLayer(const std::vector<float> &actual_values,
+CalculateErrorLayer(const std::vector<float> &actual_values,
                                const std::vector<float> &expected_values) {
 
   if (actual_values.size() != expected_values.size()) {

@@ -2,7 +2,7 @@
 
 #include "utils/model_math.h"
 
-using neural_network::ModelMath;
+namespace neural_network {
 
 const float kCalculationTolerance = 0.01f;
 
@@ -11,7 +11,7 @@ TEST_CASE("Sigmoid Calculations") {
   SECTION("Negative input") {
     float input = -1;
 
-    float sigmoid = ModelMath::CalculateSigmoid(input);
+    float sigmoid = CalculateSigmoid(input);
     float expected_value = 0.2689f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
@@ -20,7 +20,7 @@ TEST_CASE("Sigmoid Calculations") {
   SECTION("Zero input") {
     float input = 0;
 
-    float sigmoid = ModelMath::CalculateSigmoid(input);
+    float sigmoid = CalculateSigmoid(input);
     float expected_value = 0.5f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
@@ -29,7 +29,7 @@ TEST_CASE("Sigmoid Calculations") {
   SECTION("Positive input") {
     float input = 1;
 
-    float sigmoid = ModelMath::CalculateSigmoid(input);
+    float sigmoid = CalculateSigmoid(input);
     float expected_value = 0.73106f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
@@ -41,7 +41,7 @@ TEST_CASE("Sigmoid Derivative Calculations") {
   SECTION("Negative input") {
     float input = -1;
 
-    float sigmoid = ModelMath::CalculateSigmoidDerivative(input);
+    float sigmoid = CalculateSigmoidDerivative(input);
     float expected_value = 0.1967f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
@@ -50,7 +50,7 @@ TEST_CASE("Sigmoid Derivative Calculations") {
   SECTION("Zero input") {
     float input = 0;
 
-    float sigmoid = ModelMath::CalculateSigmoidDerivative(input);
+    float sigmoid = CalculateSigmoidDerivative(input);
     float expected_value = 0.25f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
@@ -59,17 +59,17 @@ TEST_CASE("Sigmoid Derivative Calculations") {
   SECTION("Positive input") {
     float input = 1;
 
-    float sigmoid = ModelMath::CalculateSigmoidDerivative(input);
+    float sigmoid = CalculateSigmoidDerivative(input);
     float expected_value = 0.196f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
   }
 
   SECTION("Sigmoid input") {
-    float input = ModelMath::CalculateSigmoid(1);
+    float input = CalculateSigmoid(1);
     bool isSigmoid = true;
 
-    float sigmoid = ModelMath::CalculateSigmoidDerivative(input, isSigmoid);
+    float sigmoid = CalculateSigmoidDerivative(input, isSigmoid);
     float expected_value = 0.1967f;
 
     REQUIRE(sigmoid == Approx(expected_value).epsilon(kCalculationTolerance));
@@ -82,7 +82,7 @@ TEST_CASE("Point Error Calculations") {
     float expected_input = -1;
     float actual_input = -2;
 
-    float error = ModelMath::CalculatePointError(expected_input, actual_input);
+    float error = CalculatePointError(expected_input, actual_input);
     float expected_error = 0.105f;
 
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
@@ -92,7 +92,7 @@ TEST_CASE("Point Error Calculations") {
     float expected_input = -1;
     float actual_input = 1;
 
-    float error = ModelMath::CalculatePointError(expected_input, actual_input);
+    float error = CalculatePointError(expected_input, actual_input);
     float expected_error = -0.3932f;
 
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
@@ -102,7 +102,7 @@ TEST_CASE("Point Error Calculations") {
     float expected_input = 1;
     float actual_input = -1;
 
-    float error = ModelMath::CalculatePointError(expected_input, actual_input);
+    float error = CalculatePointError(expected_input, actual_input);
     float expected_error = 0.3932f;
 
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
@@ -112,7 +112,7 @@ TEST_CASE("Point Error Calculations") {
     float expected_input = 1;
     float actual_input = 2;
 
-    float error = ModelMath::CalculatePointError(expected_input, actual_input);
+    float error = CalculatePointError(expected_input, actual_input);
     float expected_error = -0.105f;
 
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
@@ -122,7 +122,7 @@ TEST_CASE("Point Error Calculations") {
     float expected_input = 1;
     float actual_input = 1;
 
-    float error = ModelMath::CalculatePointError(expected_input, actual_input);
+    float error = CalculatePointError(expected_input, actual_input);
     float expected_error = 0;
 
     REQUIRE(error == Approx(expected_error).epsilon(kCalculationTolerance));
@@ -135,14 +135,14 @@ TEST_CASE("Dot Product Calculations") {
     std::vector<float> vector1;
     std::vector<float> vector2{1.0f};
 
-    REQUIRE_THROWS(ModelMath::CalculateDotProduct(vector1, vector2));
+    REQUIRE_THROWS(CalculateDotProduct(vector1, vector2));
   }
 
   SECTION("Positive values in both vectors") {
     std::vector<float> vector1{1, 2};
     std::vector<float> vector2{1, 2};
 
-    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float product = CalculateDotProduct(vector1, vector2);
     float expected_product = 5.0f;
 
     REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
@@ -152,7 +152,7 @@ TEST_CASE("Dot Product Calculations") {
     std::vector<float> vector1{-1, -2};
     std::vector<float> vector2{-1, -2};
 
-    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float product = CalculateDotProduct(vector1, vector2);
     float expected_product = 5.0f;
 
     REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
@@ -162,7 +162,7 @@ TEST_CASE("Dot Product Calculations") {
     std::vector<float> vector1{-1, -2};
     std::vector<float> vector2{1, 2};
 
-    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float product = CalculateDotProduct(vector1, vector2);
     float expected_product = -5.0f;
 
     REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
@@ -172,7 +172,7 @@ TEST_CASE("Dot Product Calculations") {
     std::vector<float> vector1{1, 1};
     std::vector<float> vector2{-1, 1};
 
-    float product = ModelMath::CalculateDotProduct(vector1, vector2);
+    float product = CalculateDotProduct(vector1, vector2);
     float expected_product = 0.0f;
 
     REQUIRE(product == Approx(expected_product).epsilon(kCalculationTolerance));
@@ -182,8 +182,8 @@ TEST_CASE("Dot Product Calculations") {
     std::vector<float> vector1{-1, -2};
     std::vector<float> vector2{1, 2};
 
-    float product1 = ModelMath::CalculateDotProduct(vector1, vector2);
-    float product2 = ModelMath::CalculateDotProduct(vector2, vector1);
+    float product1 = CalculateDotProduct(vector1, vector2);
+    float product2 = CalculateDotProduct(vector2, vector1);
 
     REQUIRE(product1 == product2);
   }
@@ -195,7 +195,7 @@ TEST_CASE("Error Layer Calculations") {
     std::vector<float> empty_layer{};
     std::vector<float> filled_layer{0};
 
-    REQUIRE_THROWS(ModelMath::CalculateErrorLayer(empty_layer, filled_layer));
+    REQUIRE_THROWS(CalculateErrorLayer(empty_layer, filled_layer));
   }
 
   SECTION("Correct error values") {
@@ -203,7 +203,7 @@ TEST_CASE("Error Layer Calculations") {
     std::vector<float> filled_layer{-2, 1, 0};
 
     std::vector<float> error_layer =
-        ModelMath::CalculateErrorLayer(empty_layer, filled_layer);
+        CalculateErrorLayer(empty_layer, filled_layer);
     std::vector<float> expected_error_layer{-0.58984f, 0.25f, 0.19661f};
 
     REQUIRE(expected_error_layer.at(0) ==
@@ -214,3 +214,5 @@ TEST_CASE("Error Layer Calculations") {
             Approx(error_layer.at(2)).epsilon(kCalculationTolerance));
   }
 }
+
+} // namespace neural_network
