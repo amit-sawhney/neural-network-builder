@@ -22,7 +22,7 @@ public:
   void draw() override;
 
 private:
-  const std::vector<size_t> kLayerSizes{20,8,20,5,10,1};
+  const std::vector<size_t> kLayerSizes{5, 4, 3, 2, 3, 4, 5};
 
   void BuildNetworkStructure();
 

@@ -32,11 +32,13 @@ void NeuralNetworkBuilderApp::BuildNetworkStructure() {
     }
 
     float height_interval = window_height_ / (float(layer_size) + 1);
-    float neuron_radius = 50;
 
     for (size_t neuron = 0; neuron < layer_size; ++neuron) {
       glm::vec2 center(width_start * (float(layer + 1)),
                        height_interval * (float(neuron + 1)));
+
+      float neuron_radius =
+          std::min(height_interval / 2, window_width_ - center.x) / 2 - 10;
       Neuron new_neuron(center, neuron_radius, ci::Color("white"));
       network_layer.emplace_back(new_neuron);
     }
