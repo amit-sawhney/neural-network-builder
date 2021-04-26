@@ -5,21 +5,43 @@ namespace visualizer {
 
 NeuralNetworkBuilderApp::NeuralNetworkBuilderApp() {
 
-  window_width_ = GetSystemMetrics(SM_CXFULLSCREEN);
-  window_height_ = GetSystemMetrics(SM_CYFULLSCREEN);
+  window_width_ = float(GetSystemMetrics(SM_CXFULLSCREEN));
+  window_height_ = float(GetSystemMetrics(SM_CYFULLSCREEN));
 
-  ci::app::setWindowSize(window_width_, window_height_);
+  ci::app::setWindowSize(int(window_width_), int(window_height_));
+
+  BuildNetworkStructure();
 }
 
-void NeuralNetworkBuilderApp::BuildNetworkStructure() const {
+void NeuralNetworkBuilderApp::BuildNetworkStructure() {
 
-  for (size_t layer_size : kLayerSizes) {
+  if (kLayerSizes.empty()) {
+    return;
+  }
 
-    float neuron_radius = float(window_height_) / layer_size;
+  glm::vec2 screen_center(window_width_ / 2, window_height_ / 2);
+  float width_start = window_width_ / (float(kLayerSizes.size()) + 1);
+
+  for (size_t layer = 0; layer < kLayerSizes.size(); ++layer) {
+
+    Layer network_layer;
+    size_t layer_size = kLayerSizes[layer];
+
+    if (layer_size == 0) {
+      throw std::invalid_argument("Invalid layer size");
+    }
+
+    float height_interval = window_height_ / (float(layer_size) + 1);
+    float neuron_radius = 50;
 
     for (size_t neuron = 0; neuron < layer_size; ++neuron) {
-
+      glm::vec2 center(width_start * (float(layer + 1)),
+                       height_interval * (float(neuron + 1)));
+      Neuron new_neuron(center, neuron_radius, ci::Color("white"));
+      network_layer.emplace_back(new_neuron);
     }
+
+    network_.emplace_back(network_layer);
   }
 }
 

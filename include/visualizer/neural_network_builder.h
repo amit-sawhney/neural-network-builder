@@ -22,9 +22,9 @@ public:
   void draw() override;
 
 private:
-  const std::vector<size_t> kLayerSizes{2, 2, 1};
+  const std::vector<size_t> kLayerSizes{20,8,20,5,10,1};
 
-  void BuildNetworkStructure() const;
+  void BuildNetworkStructure();
 
   float CalculateSpaceBetweenLayers() const;
 
@@ -34,8 +34,8 @@ private:
 
   void DrawConnections() const;
 
-  int window_height_;
-  int window_width_;
+  float window_height_;
+  float window_width_;
   Network network_;
 };
 } // namespace visualizer
