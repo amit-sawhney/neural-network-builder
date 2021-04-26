@@ -5,6 +5,7 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
+#include "core/model.h"
 #include "neuron.h"
 
 namespace neural_network {
@@ -24,7 +25,7 @@ public:
   void fileDrop(ci::app::FileDropEvent event) override;
 
 private:
-  const std::vector<size_t> kLayerSizes{20, 10, 5, 1};
+  const std::vector<size_t> kLayerSizes{2, 1};
 
   void BuildNetworkStructure();
 
@@ -35,10 +36,16 @@ private:
 
   void DrawConnections() const;
 
+  void TrainModel(std::ifstream *training_data);
+
+  void Predict(std::ifstream *training_data);
+
   float window_height_;
   float window_width_;
   Network network_;
   ci::Color neuron_color_;
+  Model network_model_;
+  float learning_rate_;
 };
 } // namespace visualizer
 

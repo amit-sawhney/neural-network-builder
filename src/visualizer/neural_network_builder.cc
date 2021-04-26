@@ -4,7 +4,7 @@ namespace neural_network {
 namespace visualizer {
 
 NeuralNetworkBuilderApp::NeuralNetworkBuilderApp()
-    : neuron_color_(ci::Color("red")) {
+    : neuron_color_(ci::Color("red")), learning_rate_(0.01f) {
 
   window_width_ = float(GetSystemMetrics(SM_CXFULLSCREEN));
   window_height_ = float(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -12,9 +12,71 @@ NeuralNetworkBuilderApp::NeuralNetworkBuilderApp()
   ci::app::setWindowSize(int(window_width_), int(window_height_));
 
   BuildNetworkStructure();
+  network_model_ = Model(kLayerSizes, learning_rate_);
 }
 
-void NeuralNetworkBuilderApp::fileDrop(ci::app::FileDropEvent event) {}
+void NeuralNetworkBuilderApp::fileDrop(ci::app::FileDropEvent event) {
+
+  std::ifstream input_file;
+  input_file.open(event.getFile(0));
+
+  std::string current_line;
+  std::getline(input_file, current_line);
+
+  std::string id = current_line;
+
+  if (id == "TRAIN") {
+    TrainModel(&input_file);
+  } else if (id == "PREDICT") {
+    Predict(&input_file);
+  } else {
+    throw std::invalid_argument("Invalid file type");
+  }
+}
+
+void NeuralNetworkBuilderApp::TrainModel(std::ifstream *training_data) {
+
+  std::string current_line;
+
+  Matrix expected_values;
+  Matrix training_values;
+
+  while (std::getline(*training_data, current_line)) {
+
+    std::stringstream line_stream(current_line);
+    float value;
+
+    line_stream >> value;
+    expected_values.push_back({value});
+
+    std::vector<float> training_set;
+
+    while (line_stream >> value) {
+      training_set.push_back(value);
+    }
+
+    training_values.push_back(training_set);
+  }
+
+  network_model_.Train(10, training_values, expected_values);
+}
+
+void NeuralNetworkBuilderApp::Predict(std::ifstream *training_data) {
+
+  std::string current_line;
+  std::getline(*training_data, current_line);
+
+  std::stringstream line_stream(current_line);
+  float value;
+
+  std::vector<float> predict_data;
+
+  while (line_stream >> value) {
+    predict_data.push_back(value);
+  }
+
+  network_model_.Predict(predict_data);
+}
 
 void NeuralNetworkBuilderApp::BuildNetworkStructure() {
 
@@ -22,7 +84,7 @@ void NeuralNetworkBuilderApp::BuildNetworkStructure() {
     return;
   }
 
-  float width_interval = window_width_ / (float(kLayerSizes.size()) + 1);
+  float x_interval = window_width_ / (float(kLayerSizes.size()) + 1);
 
   for (size_t layer = 0; layer < kLayerSizes.size(); ++layer) {
 
@@ -33,11 +95,11 @@ void NeuralNetworkBuilderApp::BuildNetworkStructure() {
       throw std::invalid_argument("Invalid layer size");
     }
 
-    float height_interval = window_height_ / (float(layer_size) + 1);
+    float y_interval = window_height_ / (float(layer_size) + 1);
 
     for (size_t neuron = 0; neuron < layer_size; ++neuron) {
       Neuron new_neuron =
-          BuildDynamicNeuron(layer, neuron, height_interval, width_interval);
+          BuildDynamicNeuron(layer, neuron, y_interval, x_interval);
 
       network_layer.emplace_back(new_neuron);
     }
