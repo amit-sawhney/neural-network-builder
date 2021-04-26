@@ -20,12 +20,17 @@ public:
 
   glm::vec2 GetOutputConnectPoint() const;
 
+  void SetValue(float new_value);
+
+  float GetValue() const;
+
 private:
   glm::vec2 center_point_;
   glm::vec2 input_connect_point_;
   glm::vec2 output_connect_point_;
   float radius_;
   ci::Color color_;
+  float value_;
 };
 } // namespace visualizer
 } // namespace neural_network

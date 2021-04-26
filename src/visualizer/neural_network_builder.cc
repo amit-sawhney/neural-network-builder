@@ -75,7 +75,15 @@ void NeuralNetworkBuilderApp::Predict(std::ifstream *training_data) {
     predict_data.push_back(value);
   }
 
-  network_model_.Predict(predict_data);
+  UpdateVisualNeuralNetworkValues(network_model_.Predict(predict_data));
+}
+
+void NeuralNetworkBuilderApp::UpdateVisualNeuralNetworkValues(
+    const neural_network::Layer &output_values) {
+
+  for (size_t neuron = 0; neuron < output_values.size(); ++neuron) {
+    network_[network_.size() - 1][neuron].SetValue(output_values.at(neuron));
+  }
 }
 
 void NeuralNetworkBuilderApp::BuildNetworkStructure() {
