@@ -38,6 +38,7 @@ private:
   float window_height_;
   float window_width_;
   Network network_;
+  ci::Color neuron_color_;
 };
 } // namespace visualizer
 

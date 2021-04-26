@@ -3,7 +3,8 @@
 namespace neural_network {
 namespace visualizer {
 
-NeuralNetworkBuilderApp::NeuralNetworkBuilderApp() {
+NeuralNetworkBuilderApp::NeuralNetworkBuilderApp()
+    : neuron_color_(ci::Color("red")) {
 
   window_width_ = float(GetSystemMetrics(SM_CXFULLSCREEN));
   window_height_ = float(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -93,7 +94,7 @@ Neuron NeuralNetworkBuilderApp::BuildDynamicNeuron(size_t current_layer,
                    height_interval * (float(current_neuron + 1)));
 
   float neuron_radius = CalculateNeuronRadius(center.x, height_interval);
-  Neuron new_neuron(center, neuron_radius, ci::Color("white"));
+  Neuron new_neuron(center, neuron_radius, neuron_color_);
 
   return new_neuron;
 }
