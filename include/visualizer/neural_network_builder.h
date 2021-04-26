@@ -21,16 +21,17 @@ public:
 
   void draw() override;
 
+  void fileDrop(ci::app::FileDropEvent event) override;
+
 private:
-  const std::vector<size_t> kLayerSizes{5, 4, 3, 2, 3, 4, 5};
+  const std::vector<size_t> kLayerSizes{20, 10, 5, 1};
 
   void BuildNetworkStructure();
 
-  float CalculateSpaceBetweenLayers() const;
+  float CalculateNeuronRadius(float x_pos, float height_interval) const;
 
-  float CalculateSpaceBetweenNeurons() const;
-
-  float CalculateNeuronSize() const;
+  Neuron BuildDynamicNeuron(size_t current_layer, size_t current_neuron,
+                            float height_interval, float width_interval) const;
 
   void DrawConnections() const;
 

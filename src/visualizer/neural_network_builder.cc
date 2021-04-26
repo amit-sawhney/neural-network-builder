@@ -13,14 +13,15 @@ NeuralNetworkBuilderApp::NeuralNetworkBuilderApp() {
   BuildNetworkStructure();
 }
 
+void NeuralNetworkBuilderApp::fileDrop(ci::app::FileDropEvent event) {}
+
 void NeuralNetworkBuilderApp::BuildNetworkStructure() {
 
   if (kLayerSizes.empty()) {
     return;
   }
 
-  glm::vec2 screen_center(window_width_ / 2, window_height_ / 2);
-  float width_start = window_width_ / (float(kLayerSizes.size()) + 1);
+  float width_interval = window_width_ / (float(kLayerSizes.size()) + 1);
 
   for (size_t layer = 0; layer < kLayerSizes.size(); ++layer) {
 
@@ -34,12 +35,9 @@ void NeuralNetworkBuilderApp::BuildNetworkStructure() {
     float height_interval = window_height_ / (float(layer_size) + 1);
 
     for (size_t neuron = 0; neuron < layer_size; ++neuron) {
-      glm::vec2 center(width_start * (float(layer + 1)),
-                       height_interval * (float(neuron + 1)));
+      Neuron new_neuron =
+          BuildDynamicNeuron(layer, neuron, height_interval, width_interval);
 
-      float neuron_radius =
-          std::min(height_interval / 2, window_width_ - center.x) / 2 - 10;
-      Neuron new_neuron(center, neuron_radius, ci::Color("white"));
       network_layer.emplace_back(new_neuron);
     }
 
@@ -49,8 +47,8 @@ void NeuralNetworkBuilderApp::BuildNetworkStructure() {
 
 void NeuralNetworkBuilderApp::draw() {
 
-  for (const auto &neurons : network_) {
-    for (const Neuron &neuron : neurons) {
+  for (const Layer &layer : network_) {
+    for (const Neuron &neuron : layer) {
       neuron.Draw();
     }
   }
@@ -74,14 +72,30 @@ void NeuralNetworkBuilderApp::DrawConnections() const {
   }
 }
 
-float NeuralNetworkBuilderApp::CalculateNeuronSize() const { return 0.0f; }
+float NeuralNetworkBuilderApp::CalculateNeuronRadius(
+    float x_pos, float height_interval) const {
 
-float NeuralNetworkBuilderApp::CalculateSpaceBetweenLayers() const {
-  return 0.0f;
+  float neuron_margin = 10.0f;
+  float remaining_width = window_width_ - x_pos;
+
+  // Determine whether there is less height or width available for the neuron
+  float diameter = std::min(height_interval / 2, remaining_width);
+
+  return diameter / 2 - neuron_margin;
 }
 
-float NeuralNetworkBuilderApp::CalculateSpaceBetweenNeurons() const {
-  return 0.0f;
+Neuron NeuralNetworkBuilderApp::BuildDynamicNeuron(size_t current_layer,
+                                                   size_t current_neuron,
+                                                   float height_interval,
+                                                   float width_interval) const {
+
+  glm::vec2 center(width_interval * (float(current_layer + 1)),
+                   height_interval * (float(current_neuron + 1)));
+
+  float neuron_radius = CalculateNeuronRadius(center.x, height_interval);
+  Neuron new_neuron(center, neuron_radius, ci::Color("white"));
+
+  return new_neuron;
 }
 
 } // namespace visualizer
