@@ -15,7 +15,7 @@ Neuron::Neuron(const glm::vec2 &center_point, float radius,
   output_connect_point_ = center_point_ + shift;
 }
 
-void Neuron::Draw() {
+void Neuron::Draw() const {
   ci::gl::color(color_);
   ci::gl::drawStrokedCircle(center_point_, radius_);
 }

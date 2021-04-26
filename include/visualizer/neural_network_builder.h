@@ -11,6 +11,9 @@ namespace neural_network {
 
 namespace visualizer {
 
+typedef std::vector<Neuron> Layer;
+typedef std::vector<Layer> Network;
+
 class NeuralNetworkBuilderApp : public ci::app::App {
 
 public:
@@ -19,9 +22,21 @@ public:
   void draw() override;
 
 private:
+  const std::vector<size_t> kLayerSizes{2, 2, 1};
+
+  void BuildNetworkStructure() const;
+
+  float CalculateSpaceBetweenLayers() const;
+
+  float CalculateSpaceBetweenNeurons() const;
+
+  float CalculateNeuronSize() const;
+
+  void DrawConnections() const;
+
   int window_height_;
   int window_width_;
-  std::vector<size_t> layer_sizes_{2, 2, 1};
+  Network network_;
 };
 } // namespace visualizer
 

@@ -14,7 +14,7 @@ public:
 
   Neuron(const glm::vec2& center_point, float radius, const ci::Color& color);
 
-  void Draw();
+  void Draw() const;
 
   glm::vec2 GetInputConnectPoint() const;
 
