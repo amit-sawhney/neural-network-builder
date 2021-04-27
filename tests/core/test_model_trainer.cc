@@ -1,6 +1,4 @@
 #include <catch2/catch.hpp>
-#include <iostream>
-
 #include "core/trainer.h"
 
 using neural_network::Layer;
