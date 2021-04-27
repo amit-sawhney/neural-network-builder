@@ -46,5 +46,7 @@ private:
   ci::Color color_;
   float value_;
 };
+
 } // namespace visualizer
+
 } // namespace neural_network

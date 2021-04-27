@@ -75,7 +75,9 @@ void NeuralNetworkBuilderApp::Predict(std::ifstream *input_to_predict) {
     predict_data.push_back(value);
   }
 
-  UpdateVisualNeuralNetworkValues(network_model_.Predict(predict_data));
+  neural_network::Layer output = network_model_.Predict(predict_data);
+
+  UpdateVisualNeuralNetworkValues(output);
 }
 
 void NeuralNetworkBuilderApp::UpdateVisualNeuralNetworkValues(

@@ -20,10 +20,13 @@ void Neuron::Draw() const {
   ci::gl::drawStrokedCircle(center_point_, radius_);
 
   if (value_ > 0) {
-    ci::Font text_size("Text Size", 30);
-    float rounded_value = round(value_ * 100) / 100;
-    ci::gl::drawStringCentered(std::to_string(rounded_value).substr(0, 4),
-                               center_point_, ci::Color("white"), text_size);
+    // const addresses memory leak in font
+    const ci::Font text_size("Text Size", 30);
+    ci::Color text_color("white");
+    std::string rounded_text = std::to_string(value_).substr(0, 4);
+
+    ci::gl::drawStringCentered(rounded_text, center_point_, text_color,
+                               text_size);
   }
 }
 

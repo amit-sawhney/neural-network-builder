@@ -89,14 +89,13 @@ private:
    */
   void Predict(std::ifstream *input_to_predict);
 
-  void
-
   /**
    * Updates the UI Neurons after training and predicting to show calculated
    * numbers
    *
    * @param output_values the output layer of the neural network
    */
+  void
   UpdateVisualNeuralNetworkValues(const neural_network::Layer &output_values);
 
   float window_height_;
