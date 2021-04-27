@@ -61,10 +61,10 @@ void NeuralNetworkBuilderApp::TrainModel(std::ifstream *training_data) {
   network_model_.Train(10, training_values, expected_values);
 }
 
-void NeuralNetworkBuilderApp::Predict(std::ifstream *training_data) {
+void NeuralNetworkBuilderApp::Predict(std::ifstream *input_to_predict) {
 
   std::string current_line;
-  std::getline(*training_data, current_line);
+  std::getline(*input_to_predict, current_line);
 
   std::stringstream line_stream(current_line);
   float value;

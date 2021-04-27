@@ -33,8 +33,6 @@ glm::vec2 Neuron::GetOutputConnectPoint() const {
   return output_connect_point_;
 }
 
-float Neuron::GetValue() const { return value_; }
-
 void Neuron::SetValue(float new_value) { value_ = new_value; }
 
 } // namespace visualizer

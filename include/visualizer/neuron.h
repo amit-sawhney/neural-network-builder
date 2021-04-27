@@ -7,13 +7,29 @@ namespace neural_network {
 
 namespace visualizer {
 
+/**
+ * Represents a UI neuron
+ */
 class Neuron {
 
 public:
+  /**
+   * Default constructor for a Neuron
+   */
   Neuron();
 
-  Neuron(const glm::vec2& center_point, float radius, const ci::Color& color);
+  /**
+   * Initializes the values of the Neuron
+   *
+   * @param center_point the origin location of the neuron
+   * @param radius the radius of the neuron
+   * @param color the color of the neuron
+   */
+  Neuron(const glm::vec2 &center_point, float radius, const ci::Color &color);
 
+  /**
+   * Draws a neuron according to the instances specifications
+   */
   void Draw() const;
 
   glm::vec2 GetInputConnectPoint() const;
@@ -21,8 +37,6 @@ public:
   glm::vec2 GetOutputConnectPoint() const;
 
   void SetValue(float new_value);
-
-  float GetValue() const;
 
 private:
   glm::vec2 center_point_;
