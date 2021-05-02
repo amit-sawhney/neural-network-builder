@@ -61,7 +61,7 @@ void NeuralNetworkBuilderApp::keyDown(ci::app::KeyEvent event) {
     break;
   }
 }
-
+  
 void NeuralNetworkBuilderApp::TrainModel(std::ifstream *training_data) {
 
   std::string current_line;

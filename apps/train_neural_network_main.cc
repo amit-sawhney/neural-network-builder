@@ -12,7 +12,7 @@ int main() {
   Matrix train_values{{0, 1}, {1, 0}};
   Matrix expected{{1}, {0}};
 
-  model.Train(1000, train_values, expected);
+  model.Train(10, train_values, expected);
 
   float ans = model.Predict({1, 0}).at(0);
 

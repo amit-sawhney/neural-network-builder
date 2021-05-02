@@ -69,10 +69,10 @@ Layer Trainer::CalculateHiddenLayerErrors(const Matrix &neuron_values,
 
     // Multiply errors and layer
     Layer next_layer = next_layer_weights[layer_idx];
-    float product = ModelMath::CalculateDotProduct(errors, next_layer);
+    float product = CalculateDotProduct(errors, next_layer);
 
     float neuron_value = neuron_values[layer_size][layer_idx];
-    product *= ModelMath::CalculateSigmoidDerivative(neuron_value);
+    product *= CalculateSigmoidDerivative(neuron_value);
 
     layer_errors.emplace_back(product);
   }
@@ -153,12 +153,10 @@ Trainer::CalculateNextForwardPropagationLayerWeights(const Layer &layer_weights,
     Layer neuron_weights;
 
     for (size_t neuron = 0; neuron < layer_sizes_[weight_idx]; ++neuron) {
-
       size_t next_neurons_size = layer_sizes_[weight_idx + 1];
 
       // Calculate the next neuron weight
       float next_weight = layer_weights[neuron * next_neurons_size + layer_idx];
-
       neuron_weights.emplace_back(next_weight);
     }
 
@@ -175,11 +173,11 @@ Layer Trainer::CalculateNextNeurons(const Matrix &neuron_values,
 
   for (size_t layer = 0; layer < layer_sizes_[weight_idx + 1]; ++layer) {
 
-    float layer_dot_product = ModelMath::CalculateDotProduct(
+    float layer_dot_product = CalculateDotProduct(
         neuron_values.back(), weights[weight_idx]);
 
     // Apply activation function
-    layer_dot_product = ModelMath::CalculateSigmoid(layer_dot_product);
+    layer_dot_product = CalculateSigmoid(layer_dot_product);
 
     next_neurons.emplace_back(layer_dot_product);
   }

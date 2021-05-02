@@ -40,7 +40,7 @@ public:
    */
   void fileDrop(ci::app::FileDropEvent event) override;
 
-  void keyDown(ci::app::KeyEvent event) override;
+void keyDown(ci::app::KeyEvent event) override;
 
 private:
 
@@ -106,6 +106,7 @@ private:
   Model network_model_;
   float learning_rate_;
   std::vector<size_t> layer_sizes;
+
 };
 } // namespace visualizer
 

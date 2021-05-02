@@ -50,3 +50,4 @@ private:
 } // namespace visualizer
 
 } // namespace neural_network
+
