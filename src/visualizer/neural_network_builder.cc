@@ -44,16 +44,19 @@ void NeuralNetworkBuilderApp::keyDown(ci::app::KeyEvent event) {
     }
     break;
   case ci::app::KeyEvent::KEY_UP:
+    network_.clear();
     ++layer_sizes.back();
     BuildNetworkStructure();
     break;
   case ci::app::KeyEvent::KEY_RIGHT:
+    network_.clear();
     layer_sizes.push_back(1);
     network_model_ = Model(layer_sizes, learning_rate_);
     BuildNetworkStructure();
     break;
   case ci::app::KeyEvent::KEY_LEFT:
     if (layer_sizes.size() > 1) {
+      network_.clear();
       layer_sizes.pop_back();
       network_model_ = Model(layer_sizes, learning_rate_);
       BuildNetworkStructure();
