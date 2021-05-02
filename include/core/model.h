@@ -28,24 +28,6 @@ public:
   Model(const std::vector<size_t> &neuron_layers, float learning_rate);
 
   /**
-   * Overrides the output operator to handle serializing a neural network
-   *
-   * @param output the output stream to utilize
-   * @param model the model to serialize
-   * @return the output stream
-   */
-  friend std::ostream &operator<<(std::ostream &output, const Model &model);
-
-  /**
-   * Overrides the input operator to handle deserializing a neural network
-   *
-   * @param input the input stream to utilize
-   * @param model the model to deserialize
-   * @return the input stream
-   */
-  friend std::istream &operator>>(std::istream &input, Model &model);
-
-  /**
    * Trains the neural network on a certain set of data
    *
    * @param epochs the number of times the neural network will see the data
