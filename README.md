@@ -10,4 +10,13 @@ This application allows new neural network developers to play around with networ
   <video width="320" height="240" controls src="https://user-images.githubusercontent.com/66758185/116802098-c97b7780-aad5-11eb-95ff-b7681c81f2f2.mp4" />
 </div>
 
+## Dependencies 
+- clang
+- cmake
+- cinder
 
+
+### Windows 
+
+#### Visual Studio
+- Visual Studio 2017+
