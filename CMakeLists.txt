@@ -51,7 +51,7 @@ include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 
 list(APPEND CORE_SOURCE_FILES src/core/model.cc src/core/trainer.cc src/utils/model_math.cc)
 
-list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES} src/visualizer/neural_network_builder.cc)
+list(APPEND SOURCE_FILES ${CORE_SOURCE_FILES} src/visualizer/neural_network_builder.cc src/visualizer/neuron.cc)
 
 list(APPEND TEST_FILES tests/core/test_model.cc tests/utils/test_model_math.cc tests/core/test_model_trainer.cc)
 
