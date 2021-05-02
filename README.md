@@ -20,3 +20,9 @@ This application allows new neural network developers to play around with networ
 
 #### Visual Studio
 - Visual Studio 2017+
+
+## Quick Start
+
+- Download Cinder (latest version)
+- Create a new project within the Cinder directory 
+
