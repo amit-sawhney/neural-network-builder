@@ -8,6 +8,10 @@ namespace neural_network {
 
 // Mathematical calculations and code were derived from below
 // https://towardsdatascience.com/introduction-to-math-behind-neural-networks-e8b60dbbdeba
+/**
+ * Represents the Neural network model to handle the high level processes of a
+ * neural network
+ */
 class Model {
 public:
   /**
