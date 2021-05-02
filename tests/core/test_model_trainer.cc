@@ -1,6 +1,4 @@
 #include <catch2/catch.hpp>
-#include <iostream>
-
 #include "core/trainer.h"
 
 using neural_network::Layer;
@@ -60,7 +58,7 @@ TEST_CASE("Backpropagation calculations") {
 
     Layer output_layer = neuron_values.back();
     Matrix output_errors{
-        neural_network::ModelMath::CalculateErrorLayer(output_layer, {1.0f})};
+        neural_network::CalculateErrorLayer(output_layer, {1.0f})};
 
     trainer.BackPropagate(&output_errors, neuron_values);
 
