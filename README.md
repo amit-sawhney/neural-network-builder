@@ -26,3 +26,38 @@ This application allows new neural network developers to play around with networ
 - Download Cinder (latest version)
 - Create a new project within the Cinder directory 
 
+## Builder Controls
+
+#### **Keyboard**
+
+| Key      | Action |
+| ----------- | ----------- |
+| Right arrow      | Adds a layer to the end       |
+| Left arrow   | Removes a layer from the end        |
+| Up arrow      | Adds a neuron to the last layer |
+| Down arrow      | Removes a neuron from the last layer |
+
+#### **File Drops**
+The file drop event is meant to receive a text file with training or predict data. You must drop Training Data in before you can use predict features!
+- Key represents the text at the top of the text file
+
+
+| Key      | Action |
+| ----------- | ----------- |
+| TRAIN      | Trains the neural network with the file data      |
+| PREDICT | Predicts the data and displays the neural network output layer values in the outpout neruon | 
+
+#### **Train file structure**
+```
+TRAIN
+EXPECTED_VALUE_1 VALUE_1 VALUE_2 ...
+EXPECTED VALUE_2 VALUE_1 VALUE_2 ...
+.
+.
+.
+```
+#### **Train file structure**
+```
+PREDICT
+VALUE_1 VALUE_2 ...
+```
