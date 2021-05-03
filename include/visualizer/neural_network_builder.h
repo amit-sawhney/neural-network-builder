@@ -40,10 +40,15 @@ public:
    */
   void fileDrop(ci::app::FileDropEvent event) override;
 
-void keyDown(ci::app::KeyEvent event) override;
+  /**
+   * Listens for a key down event and allows a user to control the architecture
+   * of the neural network
+   *
+   * @param event the keydown event
+   */
+  void keyDown(ci::app::KeyEvent event) override;
 
 private:
-
   /**
    * Builds out the UI for the neural network structure
    */
@@ -106,7 +111,6 @@ private:
   Model network_model_;
   float learning_rate_;
   std::vector<size_t> layer_sizes;
-
 };
 } // namespace visualizer
 
