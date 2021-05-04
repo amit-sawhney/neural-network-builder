@@ -13,7 +13,6 @@ typedef std::vector<Layer> Matrix;
  * Trains the Neural Network and handles the big 3 steps
  */
 class Trainer {
-
 public:
   /**
    * Default Constructor

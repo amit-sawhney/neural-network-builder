@@ -101,8 +101,8 @@ private:
    *
    * @param output_values the output layer of the neural network
    */
-  void
-  UpdateVisualNeuralNetworkValues(const neural_network::Layer &output_values);
+  void UpdateVisualNeuralNetworkValues(
+      const neural_network::Layer &output_values);
 
   float window_height_;
   float window_width_;
