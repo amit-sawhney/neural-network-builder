@@ -4,7 +4,8 @@ namespace neural_network {
 namespace visualizer {
 
 NeuralNetworkBuilderApp::NeuralNetworkBuilderApp()
-    : neuron_color_(ci::Color("red")), learning_rate_(0.01f), layer_sizes({1}) {
+    : neuron_color_(ci::Color("white")), learning_rate_(0.01f),
+      layer_sizes({1}) {
 
   window_width_ = float(GetSystemMetrics(SM_CXFULLSCREEN));
   window_height_ = float(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -64,16 +65,14 @@ void NeuralNetworkBuilderApp::keyDown(ci::app::KeyEvent event) {
     break;
   }
 }
-  
+
 void NeuralNetworkBuilderApp::TrainModel(std::ifstream *training_data) {
 
   std::string current_line;
-
   Matrix expected_values;
   Matrix training_values;
 
   while (std::getline(*training_data, current_line)) {
-
     std::stringstream line_stream(current_line);
     float value;
 

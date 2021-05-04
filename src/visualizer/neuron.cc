@@ -11,6 +11,8 @@ Neuron::Neuron(const glm::vec2 &center_point, float radius,
     : center_point_(center_point), radius_(radius), color_(color), value_(0) {
 
   glm::vec2 shift(radius, 0);
+
+  // Calculate left and right side of circle
   input_connect_point_ = center_point_ - shift;
   output_connect_point_ = center_point_ + shift;
 }
@@ -20,7 +22,7 @@ void Neuron::Draw() const {
   ci::gl::drawStrokedCircle(center_point_, radius_);
 
   if (value_ > 0) {
-    // const addresses memory leak in font
+    // Const addresses memory leak in font
     const ci::Font text_size("Text Size", 30);
     ci::Color text_color("white");
     std::string rounded_text = std::to_string(value_).substr(0, 4);

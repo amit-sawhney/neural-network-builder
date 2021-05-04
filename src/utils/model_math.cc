@@ -17,7 +17,6 @@ float CalculateSigmoidDerivative(float value, bool isSigmoidValue) {
 float CalculatePointError(float expected, float actual) {
 
   float point_diff = expected - actual;
-
   return point_diff * CalculateSigmoidDerivative(actual);
 }
 
