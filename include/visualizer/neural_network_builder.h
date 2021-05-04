@@ -110,7 +110,7 @@ private:
   ci::Color neuron_color_;
   Model network_model_;
   float learning_rate_;
-  std::vector<size_t> layer_sizes;
+  std::vector<size_t> layer_sizes_;
 };
 } // namespace visualizer
 

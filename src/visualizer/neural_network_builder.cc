@@ -5,7 +5,7 @@ namespace visualizer {
 
 NeuralNetworkBuilderApp::NeuralNetworkBuilderApp()
     : neuron_color_(ci::Color("white")), learning_rate_(0.01f),
-      layer_sizes({1}) {
+      layer_sizes_({1}) {
 
   window_width_ = float(GetSystemMetrics(SM_CXFULLSCREEN));
   window_height_ = float(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -13,7 +13,7 @@ NeuralNetworkBuilderApp::NeuralNetworkBuilderApp()
   ci::app::setWindowSize(int(window_width_), int(window_height_));
 
   BuildNetworkStructure();
-  network_model_ = Model(layer_sizes, learning_rate_);
+  network_model_ = Model(layer_sizes_, learning_rate_);
 }
 
 void NeuralNetworkBuilderApp::fileDrop(ci::app::FileDropEvent event) {
@@ -38,28 +38,28 @@ void NeuralNetworkBuilderApp::fileDrop(ci::app::FileDropEvent event) {
 void NeuralNetworkBuilderApp::keyDown(ci::app::KeyEvent event) {
   switch (event.getCode()) {
   case ci::app::KeyEvent::KEY_DOWN:
-    if (layer_sizes.back() > 1) {
+    if (layer_sizes_.back() > 1) {
       network_.clear();
-      --layer_sizes.back();
+      --layer_sizes_.back();
       BuildNetworkStructure();
     }
     break;
   case ci::app::KeyEvent::KEY_UP:
     network_.clear();
-    ++layer_sizes.back();
+    ++layer_sizes_.back();
     BuildNetworkStructure();
     break;
   case ci::app::KeyEvent::KEY_RIGHT:
     network_.clear();
-    layer_sizes.push_back(1);
-    network_model_ = Model(layer_sizes, learning_rate_);
+    layer_sizes_.push_back(1);
+    network_model_ = Model(layer_sizes_, learning_rate_);
     BuildNetworkStructure();
     break;
   case ci::app::KeyEvent::KEY_LEFT:
-    if (layer_sizes.size() > 1) {
+    if (layer_sizes_.size() > 1) {
       network_.clear();
-      layer_sizes.pop_back();
-      network_model_ = Model(layer_sizes, learning_rate_);
+      layer_sizes_.pop_back();
+      network_model_ = Model(layer_sizes_, learning_rate_);
       BuildNetworkStructure();
     }
     break;
@@ -120,18 +120,18 @@ void NeuralNetworkBuilderApp::UpdateVisualNeuralNetworkValues(
 
 void NeuralNetworkBuilderApp::BuildNetworkStructure() {
 
-  if (layer_sizes.empty()) {
+  if (layer_sizes_.empty()) {
     return;
   }
 
   network_.clear();
 
-  float x_interval = window_width_ / (float(layer_sizes.size()) + 1);
+  float x_interval = window_width_ / (float(layer_sizes_.size()) + 1);
 
-  for (size_t layer = 0; layer < layer_sizes.size(); ++layer) {
+  for (size_t layer = 0; layer < layer_sizes_.size(); ++layer) {
 
     Layer network_layer;
-    size_t layer_size = layer_sizes[layer];
+    size_t layer_size = layer_sizes_[layer];
 
     if (layer_size == 0) {
       throw std::invalid_argument("Invalid layer size");
