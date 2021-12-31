@@ -1,4 +1,6 @@
-# Neural Network Builder
+<div align="center">
+  <h1>Neural Network Bulder</h1>
+</div>
 
 This application allows new neural network developers to play around with network architecture and to train/run neural network. Built from scratch, this beginning neural network utilizes a sigmoid activator function and stochastic gradient descent. The UI of the neural network allows users to customzie the architecture of a neural network without ever touching the code behind a neural work or attemping to omptimize layer usage and other critical features of a neural network that affect the effectiveness of a neural network.
 
